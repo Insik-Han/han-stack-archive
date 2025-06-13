@@ -38,7 +38,7 @@ jobs:
         run: npm run migrate && npm run generate
 
       - name: 🔎 Type check
-        run: npm run check:ts
+        run: npm run tsc
 
   # vitest:
   #   permissions:
