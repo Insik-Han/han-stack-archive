@@ -46,41 +46,41 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 
 1. Clone the repository
 
-    ```bash
-    git clone https://github.com/Insik-Han/han-stack.git
-    cd han-stack
-    ```
+   ```bash
+   git clone https://github.com/Insik-Han/han-stack.git
+   cd han-stack
+   ```
 
 2. Create .env
 
-    ```bash
-    cp .env.example .env
-    ```
+   ```bash
+   cp .env.example .env
+   ```
 
 3. Install dependencies
 
-    ```bash
-    npm ci
-    ```
+   ```bash
+   npm ci
+   ```
 
 4. Generate Prisma client
 
-    ```bash
-    npm run generate
-    ```
+   ```bash
+   npm run generate
+   ```
 
 5. Start the development server
 
-    ```bash
-    npm run dev
-    ```
+   ```bash
+   npm run dev
+   ```
 
 ## Development
 
 ### Project Structure
 
 ```txt
-app/
+src/
 ├── components/        # Reusable UI components
 │   ├── ui/            # Atomic/molecular UI components
 │   ├── layout/        # Layout-related components
@@ -108,9 +108,6 @@ app/
 │   └── router.ts      # Server router
 ├── styles/            # Global and component styles
 ├── utils/             # Utility functions
-├── client.tsx         # Client entry point
-├── ssr.tsx            # Server-side rendering entry
-├── api.ts             # API client
 ├── router.tsx         # Client router
 ├── routeTree.gen.ts   # Auto-generated route tree
 └── ...
@@ -142,7 +139,7 @@ Refer to the code and comments for more details on each directory and file.
 
 ### Cloudflare Workers
 
-For deploying to Cloudflare Workers, follow the guide [here](https://gist.github.com/slawton3/509f61c8e764e544d063cdd93b53c363).
+For deploying to Cloudflare Workers, follow the guide [here](https://github.com/backpine/tanstack-start-beta-on-cloudflare).
 
 ## License
 
