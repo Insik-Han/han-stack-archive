@@ -4,6 +4,7 @@
     "moduleResolution": "Bundler",
     "module": "ESNext",
     "target": "ES2022",
+    "types": ["vite"],
 
     // JSX
     "jsx": "react-jsx",
@@ -20,7 +21,7 @@
     // Paths
     "baseUrl": ".",
     "paths": {
-      "~/*": ["./app/*"]
+      "~/*": ["./src/*"]
     }
   }
 }

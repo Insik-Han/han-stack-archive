@@ -1,5 +1,4 @@
-import { createAPIFileRoute } from '@tanstack/react-start/api'
-
+import { createServerFileRoute } from '@tanstack/react-start/server'
 import { RPC_PATH_PREFIX } from '~/constants/rpc'
 import { serverHandler } from '~/server/handler'
 
@@ -12,7 +11,9 @@ async function handle({ request }: { request: Request }) {
 	return response ?? new Response('Not Found', { status: 404 })
 }
 
-export const APIRoute = createAPIFileRoute(`${RPC_PATH_PREFIX}/$`)({
+export const ServerRoute = createServerFileRoute(
+	`${RPC_PATH_PREFIX}/$`,
+).methods({
 	DELETE: handle,
 	GET: handle,
 	HEAD: handle,
