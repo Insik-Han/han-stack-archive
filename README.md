@@ -1,5 +1,8 @@
 # Han Stack - Modern SaaS Template
 
+[![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ja.md)
+[![ko](https://img.shields.io/badge/lang-ko-blue.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ko.md)
+
 > This template is currently under development. Example code will be added soon, but it's ready for production use. (Depends on Tanstack start version)
 
 A powerful, full-stack SaaS starter template built with modern technologies. This template provides a solid foundation for building scalable SaaS applications with best practices and industry-standard tools.
@@ -19,21 +22,28 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 
 ### Frontend
 
-- [React](https://react.dev) - UI Library
+- [React](https://react.dev) - UI Library (v19.1)
 - [TanStack Router](https://tanstack.com/router/latest) - Type-safe routing
 - [TanStack Query](https://tanstack.com/query/latest) - Data synchronization
+- [Tailwind CSS v4](https://tailwindcss.com) - Utility-first CSS framework
+- [Radix UI](https://www.radix-ui.com) - Headless UI components
+- [shadcn/ui](https://ui.shadcn.com) - Re-usable components built on Radix UI
 - [Vite](https://vitejs.dev) - Build tool and dev server
 
 ### Backend & API
 
 - [TanStack Start](https://tanstack.com/start/latest) - Full-stack framework
-- [ORPC](https://orpc.unnoq.com) - Type-safe RPC
-- [Prisma](https://www.prisma.io/)
+- [ORPC](https://orpc.unnoq.com) - Type-safe RPC for end-to-end type safety
+- [Prisma](https://www.prisma.io/) - Modern database ORM
+- [Cloudflare Workers](https://workers.cloudflare.com) - Edge runtime deployment
 
 ### Development & Tooling
 
+- [TypeScript](https://www.typescriptlang.org) - Type safety throughout
+- [Biome](https://biomejs.dev) - Fast formatter and linter
 - [Zod](https://zod.dev) - Runtime type validation
-- [Zod Prisma Types](https://github.com/chrishoermann/zod-prisma-types)
+- [Zod Prisma Types](https://github.com/chrishoermann/zod-prisma-types) - Auto-generated Zod schemas
+- [React Hook Form](https://react-hook-form.com) - Performant forms with validation
 
 ## Getting Started
 
@@ -130,9 +140,24 @@ Refer to the code and comments for more details on each directory and file.
 
 ### Scripts
 
-- `npm run dev` - Start development server
+#### Development
+
+- `npm run dev` - Start development server on port 3000
 - `npm run build` - Build for production
-- `npm run biome` - Run Biome
+- `npm run preview` - Preview with Wrangler (Cloudflare Workers)
+
+#### Database
+
+- `npm run generate` - Generate Prisma client and Zod types
+- `npm run prisma:studio` - Open Prisma Studio GUI
+- `npm run db:seed` - Seed database with test data
+- `npm run db:reset` - Reset database and migrations
+- `npm run migrate:dev` - Run Prisma migrations in development
+- `npm run migrate` - Deploy migrations to production
+
+#### Code Quality
+
+- `npm run biome` - Format and lint code with Biome
 - `npm run tsc` - Run TypeScript type checking
 
 ## Deployment
