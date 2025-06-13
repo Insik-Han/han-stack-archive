@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
+import { useNavigate } from '@tanstack/react-router'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -14,12 +15,14 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
+import { authClient } from '~/lib/auth-client'
 import { cn } from '~/lib/utils'
 
 type SignUpFormProps = React.HTMLAttributes<HTMLFormElement>
 
 const formSchema = z
 	.object({
+		name: z.string().min(1, { message: 'Please enter your name' }),
 		email: z
 			.string()
 			.min(1, { message: 'Please enter your email' })
@@ -29,8 +32,8 @@ const formSchema = z
 			.min(1, {
 				message: 'Please enter your password',
 			})
-			.min(7, {
-				message: 'Password must be at least 7 characters long',
+			.min(8, {
+				message: 'Password must be at least 8 characters long',
 			}),
 		confirmPassword: z.string(),
 	})
@@ -41,22 +44,40 @@ const formSchema = z
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
 	const [isLoading, setIsLoading] = React.useState(false)
+	const navigate = useNavigate()
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
 		defaultValues: {
+			name: '',
 			email: '',
 			password: '',
 			confirmPassword: '',
 		},
 	})
 
-	function onSubmit(_data: z.infer<typeof formSchema>) {
+	async function onSubmit(data: z.infer<typeof formSchema>) {
 		setIsLoading(true)
 
-		setTimeout(() => {
+		try {
+			const response = await authClient.signUp.email({
+				name: data.name,
+				email: data.email,
+				password: data.password,
+			})
+
+			if (response.data) {
+				// Navigate to sign in page or dashboard after successful signup
+				navigate({ to: '/sign-in' })
+			}
+		} catch (_error) {
+			// Handle error
+			form.setError('root', {
+				message: 'Failed to create account. Please try again.',
+			})
+		} finally {
 			setIsLoading(false)
-		}, 3000)
+		}
 	}
 
 	return (
@@ -66,6 +87,19 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 				className={cn('grid gap-3', className)}
 				{...props}
 			>
+				<FormField
+					control={form.control}
+					name="name"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>Name</FormLabel>
+							<FormControl>
+								<Input placeholder="John Doe" {...field} />
+							</FormControl>
+							<FormMessage />
+						</FormItem>
+					)}
+				/>
 				<FormField
 					control={form.control}
 					name="email"

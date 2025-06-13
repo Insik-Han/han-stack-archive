@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
@@ -15,6 +15,7 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
+import { authClient } from '~/lib/auth-client'
 import { cn } from '~/lib/utils'
 
 type UserAuthFormProps = React.HTMLAttributes<HTMLFormElement>
@@ -36,6 +37,7 @@ const formSchema = z.object({
 
 export function SignInForm({ className, ...props }: UserAuthFormProps) {
 	const [isLoading, setIsLoading] = React.useState(false)
+	const navigate = useNavigate()
 
 	const form = useForm<z.infer<typeof formSchema>>({
 		resolver: zodResolver(formSchema),
@@ -45,12 +47,27 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
 		},
 	})
 
-	function onSubmit(_data: z.infer<typeof formSchema>) {
+	async function onSubmit(data: z.infer<typeof formSchema>) {
 		setIsLoading(true)
 
-		setTimeout(() => {
+		try {
+			const response = await authClient.signIn.email({
+				email: data.email,
+				password: data.password,
+			})
+
+			if (response.data) {
+				// Navigate to dashboard or home page after successful login
+				navigate({ to: '/_admin-console' })
+			}
+		} catch (_error) {
+			// Handle error
+			form.setError('root', {
+				message: 'Invalid email or password',
+			})
+		} finally {
 			setIsLoading(false)
-		}, 3000)
+		}
 	}
 
 	return (

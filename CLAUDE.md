@@ -33,6 +33,7 @@ npm run tsc          # TypeScript type checking
 - **Frontend**: React 19.1, TanStack Router/Query/Start, Vite, Tailwind CSS v4
 - **UI Components**: Radix UI + shadcn/ui components in `src/components/ui/`
 - **Backend**: ORPC for type-safe RPC, Prisma ORM with SQLite/Cloudflare D1
+- **Authentication**: Better Auth with Cloudflare D1 integration
 - **Deployment**: Cloudflare Workers (configured in wrangler.jsonc)
 
 ### Key Patterns
@@ -43,6 +44,7 @@ Routes are in `src/routes/` using TanStack Router conventions:
 - `(errors)/` - Error pages (401, 404, 500, etc.)
 - `_admin-console/` - Protected admin routes
 - `api/rpc.$` - All API calls go through this single endpoint
+- `api/auth/[...all]` - Better Auth API endpoints
 
 #### Feature-Based Organization
 Each feature in `src/features/` contains:
@@ -56,6 +58,13 @@ Each feature in `src/features/` contains:
 - ORPC router defines type-safe procedures in `src/server/router.ts`
 - Add new API routes in `src/server/routes/`
 - Prisma operations use the singleton from `src/server/prisma.ts`
+
+#### Authentication Architecture
+- Better Auth configuration in `src/server/auth.ts`
+- Client-side auth in `src/lib/auth-client.ts`
+- Email/password authentication enabled
+- Cloudflare D1 adapter for production
+- Session data includes geolocation info via Cloudflare
 
 #### State Management
 - Server state: TanStack Query
@@ -88,3 +97,7 @@ TypeScript and Vite are configured with `~/*` mapping to `./src/*`
 
 ### Environment
 Copy `.env.example` to `.env` for local development
+
+Required environment variables:
+- `DATABASE_URL` - SQLite database path for local development
+- `BETTER_AUTH_SECRET` - Secret key for Better Auth (generate a strong random string)
