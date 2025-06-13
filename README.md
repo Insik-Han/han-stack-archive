@@ -132,8 +132,8 @@ Refer to the code and comments for more details on each directory and file.
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
-- `npm run fix:biome` - Run Biome
-- `npm run check:ts` - Run TypeScript type checking
+- `npm run biome` - Run Biome
+- `npm run tsc` - Run TypeScript type checking
 
 ## Deployment
 
