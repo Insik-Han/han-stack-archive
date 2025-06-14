@@ -107,6 +107,11 @@ Required environment variables:
 
 ### Git Workflow
 
+#### Language Requirements
+- **All GitHub issues, pull requests, and commit messages MUST be written in English**
+- **All source code, comments, and documentation MUST be written in English**
+- **Use clear, descriptive English for better international collaboration**
+
 #### Development Flow
 Follow these steps for all code changes:
 
