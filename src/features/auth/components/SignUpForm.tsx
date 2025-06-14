@@ -1,6 +1,7 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-import type React from 'react'
+import { useNavigate } from '@tanstack/react-router'
+import type { ComponentProps } from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { PasswordInput } from '~/components/PasswordInput'
@@ -14,14 +15,14 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { useSignUp } from '~/features/auth/hooks/use-auth'
+import { authClient } from '~/lib/auth/client'
 import { cn } from '~/lib/utils'
 import { registerSchema } from '~/schemas/auth'
 
-type SignUpFormProps = React.HTMLAttributes<HTMLFormElement>
+type Props = ComponentProps<'form'>
 
-export function SignUpForm({ className, ...props }: SignUpFormProps) {
-	const { mutateAsync, isPending } = useSignUp()
+export function SignUpForm({ className, ...props }: Props) {
+	const navigate = useNavigate()
 
 	const form = useForm<z.infer<typeof registerSchema>>({
 		resolver: zodResolver(registerSchema),
@@ -35,7 +36,15 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 
 	async function onSubmit(data: z.infer<typeof registerSchema>) {
 		try {
-			await mutateAsync(data)
+			await authClient.signUp.email({
+				name: data.name,
+				email: data.email,
+				password: data.password,
+			})
+
+			navigate({
+				to: '/',
+			})
 		} catch (_error) {
 			// Handle error
 			form.setError('root', {
@@ -103,7 +112,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit" className="mt-2" disabled={isPending}>
+				<Button type="submit" className="mt-2">
 					Create Account
 				</Button>
 
@@ -119,20 +128,10 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 				</div>
 
 				<div className="grid grid-cols-2 gap-2">
-					<Button
-						variant="outline"
-						className="w-full"
-						type="button"
-						disabled={isPending}
-					>
+					<Button variant="outline" className="w-full" type="button">
 						<IconBrandGithub className="h-4 w-4" /> GitHub
 					</Button>
-					<Button
-						variant="outline"
-						className="w-full"
-						type="button"
-						disabled={isPending}
-					>
+					<Button variant="outline" className="w-full" type="button">
 						<IconBrandFacebook className="h-4 w-4" /> Facebook
 					</Button>
 				</div>

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
-import React from 'react'
+import React, { type ComponentProps } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '~/components/ui/button'
@@ -14,8 +14,6 @@ import {
 import { Input } from '~/components/ui/input'
 import { cn } from '~/lib/utils'
 
-type ForgotFormProps = React.HTMLAttributes<HTMLFormElement>
-
 const formSchema = z.object({
 	email: z
 		.string()
@@ -23,7 +21,9 @@ const formSchema = z.object({
 		.email({ message: 'Invalid email address' }),
 })
 
-export function ForgotPasswordForm({ className, ...props }: ForgotFormProps) {
+type Props = ComponentProps<'form'>
+
+export function ForgotPasswordForm({ className, ...props }: Props) {
 	const [isLoading, setIsLoading] = React.useState(false)
 
 	const form = useForm<z.infer<typeof formSchema>>({

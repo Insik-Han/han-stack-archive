@@ -1,7 +1,7 @@
-import type React from 'react'
+import type { ComponentProps } from 'react'
 import { cn } from '~/lib/utils'
 
-interface MainProps extends React.HTMLAttributes<HTMLElement> {
+interface MainProps extends ComponentProps<'main'> {
 	fixed?: boolean
 }
 

@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { PasswordInput } from '~/components/PasswordInput'
@@ -14,11 +14,11 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { useSignIn } from '~/features/auth/hooks/use-auth'
+import { authClient } from '~/lib/auth/client'
 import { loginSchema } from '~/schemas/auth'
 
 export function SignInForm() {
-	const { mutateAsync, isPending } = useSignIn()
+	const navigate = useNavigate()
 
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
@@ -30,7 +30,14 @@ export function SignInForm() {
 
 	async function onSubmit(data: z.infer<typeof loginSchema>) {
 		try {
-			await mutateAsync(data)
+			await authClient.signIn.email({
+				email: data.email,
+				password: data.password,
+			})
+
+			navigate({
+				to: '/',
+			})
 		} catch (_error) {
 			// Handle error
 			form.setError('root', {
@@ -74,7 +81,7 @@ export function SignInForm() {
 						</FormItem>
 					)}
 				/>
-				<Button type="submit" className="mt-2" disabled={isPending}>
+				<Button type="submit" className="mt-2">
 					Login
 				</Button>
 
@@ -90,10 +97,10 @@ export function SignInForm() {
 				</div>
 
 				<div className="grid grid-cols-2 gap-2">
-					<Button variant="outline" type="button" disabled={isPending}>
+					<Button variant="outline" type="button">
 						<IconBrandGithub className="h-4 w-4" /> GitHub
 					</Button>
-					<Button variant="outline" type="button" disabled={isPending}>
+					<Button variant="outline" type="button">
 						<IconBrandFacebook className="h-4 w-4" /> Facebook
 					</Button>
 				</div>

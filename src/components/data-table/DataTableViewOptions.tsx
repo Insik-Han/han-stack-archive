@@ -10,11 +10,13 @@ import {
 	DropdownMenuTrigger,
 } from '~/components/ui/dropdown-menu'
 
-interface Props<TData> {
+interface DataTableViewOptionsProps<TData> {
 	table: Table<TData>
 }
 
-export function TasksTableViewOptions<TData>({ table }: Props<TData>) {
+export function DataTableViewOptions<TData>({
+	table,
+}: DataTableViewOptionsProps<TData>) {
 	return (
 		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger asChild={true}>

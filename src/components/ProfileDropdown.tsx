@@ -1,4 +1,5 @@
-import { Link } from '@tanstack/react-router'
+import { Link, useNavigate } from '@tanstack/react-router'
+import { authClient } from '~/lib/auth/client'
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar'
 import { Button } from './ui/button'
 import {
@@ -13,6 +14,7 @@ import {
 } from './ui/dropdown-menu'
 
 export function ProfileDropdown() {
+	const navigate = useNavigate()
 	return (
 		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger asChild={true}>
@@ -55,7 +57,12 @@ export function ProfileDropdown() {
 					<DropdownMenuItem>New Team</DropdownMenuItem>
 				</DropdownMenuGroup>
 				<DropdownMenuSeparator />
-				<DropdownMenuItem>
+				<DropdownMenuItem
+					onClick={async () => {
+						await authClient.signOut()
+						navigate({ to: '/sign-in' })
+					}}
+				>
 					Log out
 					<DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
 				</DropdownMenuItem>

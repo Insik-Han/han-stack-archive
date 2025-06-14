@@ -1,6 +1,6 @@
 import { IconMenu } from '@tabler/icons-react'
 import { Link } from '@tanstack/react-router'
-import type React from 'react'
+import type { ComponentProps } from 'react'
 import { cn } from '~/lib/utils'
 import { Button } from '../ui/button'
 import {
@@ -10,7 +10,7 @@ import {
 	DropdownMenuTrigger,
 } from '../ui/dropdown-menu'
 
-interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
+interface Props extends ComponentProps<'nav'> {
 	links: {
 		title: string
 		href: string
@@ -19,7 +19,7 @@ interface TopNavProps extends React.HTMLAttributes<HTMLElement> {
 	}[]
 }
 
-export function TopNav({ className, links, ...props }: TopNavProps) {
+export function TopNav({ className, links, ...props }: Props) {
 	return (
 		<>
 			<div className="md:hidden">
