@@ -1,0 +1,8 @@
+{
+	"permissions": {
+		"allow": ["mcp__context7__*"],
+		"deny": []
+	},
+	"enabledMcpjsonServers": ["context7"],
+	"enableAllProjectMcpServers": true
+}

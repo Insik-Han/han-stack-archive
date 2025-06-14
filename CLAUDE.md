@@ -104,3 +104,50 @@ Copy `.env.example` to `.env` for local development
 Required environment variables:
 - `DATABASE_URL` - SQLite database path for local development
 - `BETTER_AUTH_SECRET` - Secret key for Better Auth (generate a strong random string)
+
+### Git Workflow
+
+#### Development Flow
+Follow these steps for all code changes:
+
+1. **Update local branch**
+   ```bash
+   git pull origin dev
+   ```
+
+2. **Create GitHub issue**
+   ```bash
+   gh issue create --title "Task description" --body "Detailed requirements"
+   ```
+   Note the issue number for branch naming
+
+3. **Create feature branch**
+   ```bash
+   git checkout -b {prefix}/{issueNumber}
+   ```
+   Branch prefixes:
+   - `feat/` - New features
+   - `fix/` - Bug fixes
+   - `chore/` - Maintenance tasks
+   - `docs/` - Documentation updates
+   - `refactor/` - Code refactoring
+
+4. **Make changes and verify**
+   ```bash
+   npm run biome    # Format and lint
+   npm run tsc      # Type checking
+   ```
+
+5. **Create Pull Request**
+   ```bash
+   gh pr create --base dev --assignee @me --title "PR title" --body "Closes #issueNumber"
+   ```
+   - Always assign to yourself (`@me`)
+   - Link the issue with `Closes #issueNumber`
+   - Add review comments explaining changes
+
+#### PR Guidelines
+- Default branch is `dev`
+- All code changes to `dev` must be done via Pull Request
+- Run quality checks before creating PR
+- Use conventional commit messages
