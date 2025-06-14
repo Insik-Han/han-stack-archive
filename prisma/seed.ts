@@ -1,27 +1,11 @@
 import { fakerJA as faker } from '@faker-js/faker'
-import { PrismaClient, type User } from '../src/generated/prisma'
+import { PrismaClient } from '../src/generated/prisma'
 
 const prisma = new PrismaClient()
 
 async function seed() {
 	console.time('🌱 Database has been seeded')
 
-	// Create admin user
-	const adminUser = await prisma.user.create({
-		data: {
-			id: faker.string.uuid(),
-			name: 'Admin',
-			email: 'admin@example.com',
-			emailVerified: true,
-			image: faker.image.avatar(),
-			createdAt: new Date(),
-			updatedAt: new Date(),
-		},
-	})
-	console.log(`✅ Created admin user: ${adminUser.email}`)
-
-	// Create random users using faker
-	const users: User[] = []
 	for (let i = 0; i < 50; i++) {
 		const firstName = faker.person.firstName()
 		const lastName = faker.person.lastName()
@@ -33,7 +17,7 @@ async function seed() {
 		const updatedAt = faker.date.between({ from: createdAt, to: new Date() })
 
 		try {
-			const user = await prisma.user.create({
+			await prisma.user.create({
 				data: {
 					id: faker.string.uuid(),
 					name,
@@ -44,7 +28,6 @@ async function seed() {
 					updatedAt,
 				},
 			})
-			users.push(user)
 			console.log(`✅ Created user ${i + 1}/50: ${email}`)
 		} catch (error) {
 			console.error(`❌ Failed to create user ${email}:`, error)
@@ -52,9 +35,7 @@ async function seed() {
 	}
 
 	console.log('\n📊 Seeding Summary:')
-	console.log('- Admin user created: admin@example.com')
-	console.log(`- Random users created: ${users.length}`)
-	console.log(`- Total users in database: ${users.length + 1}`)
+	console.log('- Total users created: 50')
 
 	console.timeEnd('🌱 Database has been seeded')
 }
