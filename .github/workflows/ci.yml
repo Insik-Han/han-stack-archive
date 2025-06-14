@@ -3,8 +3,14 @@ name: 🔁 CI
 on:
   pull_request:
     types: [synchronize, opened, reopened, ready_for_review]
-    paths-ignore:
-      - README.md
+    paths:
+      - '.github/workflows/ci.yml'
+      - 'package-lock.json'
+      - 'package.json'
+      - 'prisma/**'
+      - 'src/**'
+      - 'tsconfig.json'
+      - 'vite.config.ts'
 
 jobs:
   biome:
