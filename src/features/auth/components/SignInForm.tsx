@@ -58,7 +58,7 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
 
 			if (response.data) {
 				// Navigate to dashboard or home page after successful login
-				navigate({ to: '/_admin-console' })
+				navigate({ to: '/' })
 			}
 		} catch (_error) {
 			// Handle error
