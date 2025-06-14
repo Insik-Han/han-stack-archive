@@ -1,5 +1,3 @@
-'server only'
-
 import { betterAuth } from 'better-auth'
 import { prismaAdapter } from 'better-auth/adapters/prisma'
 import { reactStartCookies } from 'better-auth/react-start'

@@ -73,10 +73,10 @@
    pnpm install --frozen-lockfile
    ```
 
-4. Prisma 클라이언트 생성
+4. 패키지 셋업
 
    ```bash
-   pnpm run generate
+   pnpm run setup
    ```
 
 5. 개발 서버 시작

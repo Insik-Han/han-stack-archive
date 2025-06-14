@@ -73,10 +73,10 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
    pnpm install --frozen-lockfile
    ```
 
-4. Generate Prisma client
+4. Setup packages
 
    ```bash
-   pnpm run generate
+   pnpm run setup
    ```
 
 5. Start the development server

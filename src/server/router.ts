@@ -1,5 +1,3 @@
-'server only'
-
 import { authRouter as auth } from './routes/auth'
 import { usersRouter as users } from './routes/users'
 
