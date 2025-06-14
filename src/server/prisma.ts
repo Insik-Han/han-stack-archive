@@ -1,5 +1,4 @@
 import { serverOnly } from '@tanstack/react-start'
-
 import { PrismaClient } from '~/generated/prisma'
 
 const createPrismaClient = serverOnly(

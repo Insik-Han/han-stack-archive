@@ -1,9 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
+import { useMutation } from '@tanstack/react-query'
 import { Link, useNavigate } from '@tanstack/react-router'
-import React from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import type { z } from 'zod'
 import { PasswordInput } from '~/components/PasswordInput'
 import { Button } from '~/components/ui/button'
 import {
@@ -15,48 +15,28 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { authClient } from '~/lib/auth-client'
-import { cn } from '~/lib/utils'
+import { orpc } from '~/lib/orpc'
+import { loginSchema } from '~/schemas/auth'
 
-type UserAuthFormProps = React.HTMLAttributes<HTMLFormElement>
-
-const formSchema = z.object({
-	email: z
-		.string()
-		.min(1, { message: 'Please enter your email' })
-		.email({ message: 'Invalid email address' }),
-	password: z
-		.string()
-		.min(1, {
-			message: 'Please enter your password',
-		})
-		.min(7, {
-			message: 'Password must be at least 7 characters long',
-		}),
-})
-
-export function SignInForm({ className, ...props }: UserAuthFormProps) {
-	const [isLoading, setIsLoading] = React.useState(false)
+export function SignInForm() {
 	const navigate = useNavigate()
+	const { mutateAsync, isPending } = useMutation(
+		orpc.auth.signIn.mutationOptions(),
+	)
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof loginSchema>>({
+		resolver: zodResolver(loginSchema),
 		defaultValues: {
 			email: '',
 			password: '',
 		},
 	})
 
-	async function onSubmit(data: z.infer<typeof formSchema>) {
-		setIsLoading(true)
-
+	async function onSubmit(data: z.infer<typeof loginSchema>) {
 		try {
-			const response = await authClient.signIn.email({
-				email: data.email,
-				password: data.password,
-			})
+			const response = await mutateAsync(data)
 
-			if (response.data) {
+			if (response?.token) {
 				// Navigate to dashboard or home page after successful login
 				navigate({ to: '/' })
 			}
@@ -65,18 +45,12 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
 			form.setError('root', {
 				message: 'Invalid email or password',
 			})
-		} finally {
-			setIsLoading(false)
 		}
 	}
 
 	return (
 		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className={cn('grid gap-3', className)}
-				{...props}
-			>
+			<form onSubmit={form.handleSubmit(onSubmit)} className="grid gap-3">
 				<FormField
 					control={form.control}
 					name="email"
@@ -109,7 +83,7 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
 						</FormItem>
 					)}
 				/>
-				<Button className="mt-2" disabled={isLoading}>
+				<Button type="submit" className="mt-2" disabled={isPending}>
 					Login
 				</Button>
 
@@ -125,10 +99,10 @@ export function SignInForm({ className, ...props }: UserAuthFormProps) {
 				</div>
 
 				<div className="grid grid-cols-2 gap-2">
-					<Button variant="outline" type="button" disabled={isLoading}>
+					<Button variant="outline" type="button" disabled={isPending}>
 						<IconBrandGithub className="h-4 w-4" /> GitHub
 					</Button>
-					<Button variant="outline" type="button" disabled={isLoading}>
+					<Button variant="outline" type="button" disabled={isPending}>
 						<IconBrandFacebook className="h-4 w-4" /> Facebook
 					</Button>
 				</div>
