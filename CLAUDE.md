@@ -6,26 +6,35 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Development
 ```bash
-npm run dev          # Start dev server on port 3000
-npm run build        # Production build with Vite
-npm run preview      # Preview with Wrangler (Cloudflare Workers)
+pnpm run dev          # Start dev server on port 3000
+pnpm run build        # Production build with Vite
+pnpm run preview      # Preview with Wrangler (Cloudflare Workers)
 ```
 
 ### Database
 ```bash
-npm run generate     # Generate Prisma client and Zod types - run after schema changes
-npm run prisma:studio # Open Prisma Studio GUI
-npm run db:seed      # Seed database with test data
-npm run db:reset     # Reset database and migrations
-npm run migrate:dev  # Run Prisma migrations in dev
-npm run migrate      # Deploy migrations to production
+pnpm run generate     # Generate Prisma client and Zod types - run after schema changes
+pnpm run prisma:studio # Open Prisma Studio GUI
+pnpm run db:seed      # Seed database with test data
+pnpm run db:reset     # Reset database and migrations
+pnpm run migrate:dev  # Run Prisma migrations in dev
+pnpm run migrate      # Deploy migrations to production
 ```
 
 ### Code Quality
 ```bash
-npm run biome        # Format and lint code with Biome (replaces ESLint/Prettier)
-npm run tsc          # TypeScript type checking
+pnpm run biome        # Format and lint code with Biome (replaces ESLint/Prettier)
+pnpm run tsc          # TypeScript type checking
 ```
+
+### Git Hooks
+```bash
+pnpm lefthook install # Install git hooks (already done during setup)
+```
+
+Pre-commit hooks run automatically:
+- `biome` - Format and lint code
+- `tsc` - TypeScript type checking
 
 ## Architecture
 
@@ -96,7 +105,7 @@ TypeScript and Vite are configured with `~/*` mapping to `./src/*`
 ### Database
 - Local: SQLite via Prisma
 - Production: Cloudflare D1 via Prisma adapter
-- Schema changes require running `npm run generate`
+- Schema changes require running `pnpm run generate`
 
 ### Environment
 Copy `.env.example` to `.env` for local development
@@ -139,8 +148,8 @@ Follow these steps for all code changes:
 
 4. **Make changes and verify**
    ```bash
-   npm run biome    # Format and lint
-   npm run tsc      # Type checking
+   pnpm run biome    # Format and lint
+   pnpm run tsc      # Type checking
    ```
 
 5. **Create Pull Request**

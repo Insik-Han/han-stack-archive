@@ -1,0 +1,7 @@
+pre-commit:
+  parallel: true
+  commands:
+    biome:
+      run: pnpm run biome
+    tsc:
+      run: pnpm run tsc

@@ -22,11 +22,17 @@ jobs:
         with:
           node-version: 20
 
+      - name: 📥 Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
       - name: 📥 Download deps
-        uses: bahmutov/npm-install@6bbff949458c1dd99b20e185cee8c4d6fcf1212a # v1.10.9
+        run: pnpm install --frozen-lockfile
 
       - name: Build application for Cloudflare Workers
-        run: npm run build
+        run: pnpm run build
         env:
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
 

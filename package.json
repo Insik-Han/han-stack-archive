@@ -57,6 +57,7 @@
 		"@tanstack/react-router-devtools": "^1.121.8",
 		"@types/react": "^19.1.8",
 		"@types/react-dom": "^19.1.6",
+		"lefthook": "^1.11.13",
 		"prisma": "^6.9.0",
 		"tsx": "^4.20.3",
 		"typescript": "^5.8.3",
