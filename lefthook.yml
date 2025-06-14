@@ -2,6 +2,6 @@ pre-commit:
   parallel: true
   commands:
     biome:
-      run: pnpm run biome
+      run: bun run biome
     tsc:
-      run: pnpm run tsc
+      run: bun run tsc

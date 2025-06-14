@@ -50,7 +50,7 @@
 ### 사전 요구사항
 
 - Node.js (v20 이상)
-- pnpm
+- bun
 
 ### 설치
 
@@ -70,19 +70,19 @@
 3. 의존성 설치
 
    ```bash
-   pnpm install --frozen-lockfile
+   bun install --frozen-lockfile
    ```
 
 4. 패키지 셋업
 
    ```bash
-   pnpm run setup
+   bun run setup
    ```
 
 5. 개발 서버 시작
 
    ```bash
-   pnpm run dev
+   bun run dev
    ```
 
 ## 개발
@@ -142,23 +142,23 @@ prisma/                # Prisma 스키마 및 시드 데이터
 
 #### 개발
 
-- `pnpm run dev` - 포트 3000에서 개발 서버 시작
-- `pnpm run build` - 프로덕션 빌드
-- `pnpm run preview` - Wrangler로 프리뷰 (Cloudflare Workers)
+- `bun run dev` - 포트 3000에서 개발 서버 시작
+- `bun run build` - 프로덕션 빌드
+- `bun run preview` - Wrangler로 프리뷰 (Cloudflare Workers)
 
 #### 데이터베이스
 
-- `pnpm run generate` - Prisma 클라이언트 및 Zod 타입 생성
-- `pnpm run prisma:studio` - Prisma Studio GUI 열기
-- `pnpm run db:seed` - 테스트 데이터로 데이터베이스 시드
-- `pnpm run db:reset` - 데이터베이스 및 마이그레이션 리셋
-- `pnpm run migrate:dev` - 개발 환경에서 Prisma 마이그레이션 실행
-- `pnpm run migrate` - 프로덕션에 마이그레이션 배포
+- `bun run generate` - Prisma 클라이언트 및 Zod 타입 생성
+- `bun run prisma:studio` - Prisma Studio GUI 열기
+- `bun run db:seed` - 테스트 데이터로 데이터베이스 시드
+- `bun run db:reset` - 데이터베이스 및 마이그레이션 리셋
+- `bun run migrate:dev` - 개발 환경에서 Prisma 마이그레이션 실행
+- `bun run migrate` - 프로덕션에 마이그레이션 배포
 
 #### 코드 품질
 
-- `pnpm run biome` - Biome으로 코드 포맷 및 린트
-- `pnpm run tsc` - TypeScript 타입 검사 실행
+- `bun run biome` - Biome으로 코드 포맷 및 린트
+- `bun run tsc` - TypeScript 타입 검사 실행
 
 ## 배포
 
