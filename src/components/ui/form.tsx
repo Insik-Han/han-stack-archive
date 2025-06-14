@@ -1,56 +1,85 @@
 import { Label as LabelPrimitive, Slot as SlotPrimitive } from 'radix-ui'
-
 import React from 'react'
-import {
-	Controller,
-	type ControllerProps,
-	type FieldPath,
-	type FieldValues,
-	FormProvider,
-	useFormContext,
-	useFormState,
-} from 'react-hook-form'
 import { cn } from '~/lib/utils'
 import { Label } from './label'
 
-const Form = FormProvider
+// biome-ignore lint/suspicious/noExplicitAny: TanStack Form requires many type parameters
+type FormInstance = any
 
-type FormFieldContextValue<
-	TFieldValues extends FieldValues = FieldValues,
-	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
-> = {
-	name: TName
+// Form context to hold the form instance
+type FormContextValue = {
+	form: FormInstance
 }
 
-const FormFieldContext = React.createContext<FormFieldContextValue>(
-	{} as FormFieldContextValue,
-)
+const FormContext = React.createContext<FormContextValue | null>(null)
 
-const FormField = <
-	TFieldValues extends FieldValues = FieldValues,
-	TName extends FieldPath<TFieldValues> = FieldPath<TFieldValues>,
->({
+// Form component that provides the form instance to children
+export function Form({
+	form,
+	children,
 	...props
-}: ControllerProps<TFieldValues, TName>) => {
+}: React.ComponentPropsWithoutRef<'form'> & {
+	form: FormInstance
+}) {
 	return (
-		<FormFieldContext.Provider value={{ name: props.name }}>
-			<Controller {...props} />
-		</FormFieldContext.Provider>
+		<FormContext.Provider value={{ form }}>
+			<form
+				onSubmit={(e) => {
+					e.preventDefault()
+					e.stopPropagation()
+					form.handleSubmit()
+				}}
+				{...props}
+			>
+				{children}
+			</form>
+		</FormContext.Provider>
 	)
 }
 
-const useFormField = () => {
+// Field context to hold field information
+type FormFieldContextValue = {
+	// biome-ignore lint/suspicious/noExplicitAny: TanStack Form field type
+	field: any
+	name: string
+}
+
+const FormFieldContext = React.createContext<FormFieldContextValue | null>(null)
+
+// FormField component that wraps TanStack Form's field
+interface FormFieldProps {
+	form: FormInstance
+	name: string
+	// biome-ignore lint/suspicious/noExplicitAny: TanStack Form field type
+	children: (field: any) => React.ReactNode
+}
+
+export function FormField({ form, name, children }: FormFieldProps) {
+	const FieldComponent = form.Field
+
+	return (
+		<FieldComponent name={name}>
+			{(field: FormFieldContextValue['field']) => (
+				<FormFieldContext.Provider value={{ field, name }}>
+					{children(field)}
+				</FormFieldContext.Provider>
+			)}
+		</FieldComponent>
+	)
+}
+
+// Hook to access form field context
+export const useFormField = () => {
 	const fieldContext = React.useContext(FormFieldContext)
 	const itemContext = React.useContext(FormItemContext)
-	const { getFieldState } = useFormContext()
-	const formState = useFormState({ name: fieldContext.name })
-	const fieldState = getFieldState(fieldContext.name, formState)
 
 	if (!fieldContext) {
 		throw new Error('useFormField should be used within <FormField>')
 	}
 
-	const { id } = itemContext
+	const { id } = itemContext || { id: '' }
+	const { field } = fieldContext
+	const state = field.state
 
 	return {
 		id,
@@ -58,10 +87,20 @@ const useFormField = () => {
 		formItemId: `${id}-form-item`,
 		formDescriptionId: `${id}-form-item-description`,
 		formMessageId: `${id}-form-item-message`,
-		...fieldState,
+		// Map TanStack Form state to React Hook Form-like structure
+		error:
+			state.meta.errors.length > 0
+				? { message: state.meta.errors.join(', ') }
+				: undefined,
+		isDirty: state.meta.isDirty,
+		isTouched: state.meta.isTouched,
+		invalid: !state.meta.isValid,
+		// Include the field API for direct access
+		field,
 	}
 }
 
+// FormItem context and component
 type FormItemContextValue = {
 	id: string
 }
@@ -70,7 +109,7 @@ const FormItemContext = React.createContext<FormItemContextValue>(
 	{} as FormItemContextValue,
 )
 
-function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
+export function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
 	const id = React.useId()
 
 	return (
@@ -84,7 +123,8 @@ function FormItem({ className, ...props }: React.ComponentProps<'div'>) {
 	)
 }
 
-function FormLabel({
+// FormLabel component
+export function FormLabel({
 	className,
 	...props
 }: React.ComponentProps<typeof LabelPrimitive.Root>) {
@@ -101,7 +141,8 @@ function FormLabel({
 	)
 }
 
-function FormControl({
+// FormControl component
+export function FormControl({
 	...props
 }: React.ComponentProps<typeof SlotPrimitive.Slot>) {
 	const { error, formItemId, formDescriptionId, formMessageId } = useFormField()
@@ -119,7 +160,11 @@ function FormControl({
 	)
 }
 
-function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
+// FormDescription component
+export function FormDescription({
+	className,
+	...props
+}: React.ComponentProps<'p'>) {
 	const { formDescriptionId } = useFormField()
 
 	return (
@@ -132,7 +177,11 @@ function FormDescription({ className, ...props }: React.ComponentProps<'p'>) {
 	)
 }
 
-function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
+// FormMessage component
+export function FormMessage({
+	className,
+	...props
+}: React.ComponentProps<'p'>) {
 	const { error, formMessageId } = useFormField()
 	const body = error ? String(error?.message ?? '') : props.children
 
@@ -152,13 +201,42 @@ function FormMessage({ className, ...props }: React.ComponentProps<'p'>) {
 	)
 }
 
-export {
-	useFormField,
-	Form,
-	FormItem,
-	FormLabel,
-	FormControl,
-	FormDescription,
-	FormMessage,
-	FormField,
+// Helper component for submit button state
+export function FormSubmit({
+	children,
+	className,
+	...props
+}: React.ComponentPropsWithoutRef<'button'>) {
+	const context = React.useContext(FormContext)
+	if (!context) {
+		throw new Error('FormSubmit must be used within Form')
+	}
+
+	const { form } = context
+	const SubscribeComponent = form.Subscribe
+
+	return (
+		<SubscribeComponent
+			// biome-ignore lint/suspicious/noExplicitAny: TanStack Form state type
+			selector={(state: any) => [state.canSubmit, state.isSubmitting]}
+		>
+			{([canSubmit, isSubmitting]: [boolean, boolean]) => (
+				<button
+					type="submit"
+					disabled={!canSubmit || isSubmitting}
+					className={className}
+					{...props}
+				>
+					{typeof children === 'function'
+						? (
+								children as (props: {
+									canSubmit: boolean
+									isSubmitting: boolean
+								}) => React.ReactNode
+							)({ canSubmit, isSubmitting })
+						: children}
+				</button>
+			)}
+		</SubscribeComponent>
+	)
 }

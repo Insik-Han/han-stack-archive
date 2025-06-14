@@ -69,7 +69,7 @@ Each feature in `src/features/` contains:
 #### State Management
 - Server state: TanStack Query
 - Client state: React Context (theme, global search)
-- Forms: React Hook Form + Zod validation
+- Forms: TanStack Form + Zod validation
 
 #### Component Patterns
 - UI components use CVA (class-variance-authority) for variants
@@ -106,6 +106,11 @@ Required environment variables:
 - `BETTER_AUTH_SECRET` - Secret key for Better Auth (generate a strong random string)
 
 ### Git Workflow
+
+#### Language Requirements
+- **All GitHub issues, pull requests, and commit messages MUST be written in English**
+- **All source code, comments, and documentation MUST be written in English**
+- **Use clear, descriptive English for better international collaboration**
 
 #### Development Flow
 Follow these steps for all code changes:

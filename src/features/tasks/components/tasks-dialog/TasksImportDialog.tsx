@@ -1,5 +1,4 @@
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
+import { useForm } from '@tanstack/react-form'
 import { z } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
@@ -40,26 +39,25 @@ interface Props {
 }
 
 export function TasksImportDialog({ open, onOpenChange }: Props) {
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
-		defaultValues: { file: undefined },
-	})
+	const form = useForm({
+		defaultValues: { file: undefined as FileList | undefined },
+		onSubmit: ({ value }) => {
+			const file = value.file
 
-	const fileRef = form.register('file')
-
-	const onSubmit = () => {
-		const file = form.getValues('file')
-
-		if (file?.[0]) {
-			const fileDetails = {
-				name: file[0].name,
-				size: file[0].size,
-				type: file[0].type,
+			if (file?.[0]) {
+				const fileDetails = {
+					name: file[0].name,
+					size: file[0].size,
+					type: file[0].type,
+				}
+				showSubmittedData(fileDetails, 'You have imported the following file:')
 			}
-			showSubmittedData(fileDetails, 'You have imported the following file:')
-		}
-		onOpenChange(false)
-	}
+			onOpenChange(false)
+		},
+		validators: {
+			onChange: formSchema,
+		},
+	})
 
 	return (
 		<Dialog
@@ -76,22 +74,29 @@ export function TasksImportDialog({ open, onOpenChange }: Props) {
 						Import tasks quickly from a CSV file.
 					</DialogDescription>
 				</DialogHeader>
-				<Form {...form}>
-					<form id="task-import-form" onSubmit={form.handleSubmit(onSubmit)}>
-						<FormField
-							control={form.control}
-							name="file"
-							render={() => (
-								<FormItem className="mb-2 space-y-1">
-									<FormLabel>File</FormLabel>
-									<FormControl>
-										<Input type="file" {...fileRef} className="h-8" />
-									</FormControl>
-									<FormMessage />
-								</FormItem>
-							)}
-						/>
-					</form>
+				<Form form={form} id="task-import-form">
+					<FormField
+						form={form}
+						name="file"
+						// biome-ignore lint/correctness/noChildrenProp: TanStack Form requires children as a prop
+						children={(field) => (
+							<FormItem className="mb-2 space-y-1">
+								<FormLabel>File</FormLabel>
+								<FormControl>
+									<Input
+										type="file"
+										className="h-8"
+										onChange={(e) => {
+											const files = e.target.files
+											field.handleChange(files || undefined)
+										}}
+										onBlur={field.handleBlur}
+									/>
+								</FormControl>
+								<FormMessage />
+							</FormItem>
+						)}
+					/>
 				</Form>
 				<DialogFooter className="gap-2">
 					<DialogClose asChild={true}>

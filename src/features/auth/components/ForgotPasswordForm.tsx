@@ -1,6 +1,5 @@
-import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from '@tanstack/react-form'
 import React from 'react'
-import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '~/components/ui/button'
 import {
@@ -26,43 +25,55 @@ const formSchema = z.object({
 export function ForgotPasswordForm({ className, ...props }: ForgotFormProps) {
 	const [isLoading, setIsLoading] = React.useState(false)
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm({
 		defaultValues: { email: '' },
+		onSubmit: async () => {
+			setIsLoading(true)
+
+			// TODO: Implement password reset logic with authClient
+			setTimeout(() => {
+				setIsLoading(false)
+			}, 3000)
+		},
+		validators: {
+			onChange: formSchema,
+		},
 	})
 
-	function onSubmit(_data: z.infer<typeof formSchema>) {
-		setIsLoading(true)
-
-		setTimeout(() => {
-			setIsLoading(false)
-		}, 3000)
-	}
-
 	return (
-		<Form {...form}>
-			<form
-				onSubmit={form.handleSubmit(onSubmit)}
-				className={cn('grid gap-2', className)}
-				{...props}
-			>
-				<FormField
-					control={form.control}
-					name="email"
-					render={({ field }) => (
-						<FormItem className="space-y-1">
-							<FormLabel>Email</FormLabel>
-							<FormControl>
-								<Input placeholder="name@example.com" {...field} />
-							</FormControl>
-							<FormMessage />
-						</FormItem>
-					)}
-				/>
-				<Button className="mt-2" disabled={isLoading}>
-					Continue
-				</Button>
-			</form>
+		<Form form={form} className={cn('grid gap-2', className)} {...props}>
+			<FormField
+				form={form}
+				name="email"
+				// biome-ignore lint/correctness/noChildrenProp: TanStack Form requires children as a prop
+				children={(field) => (
+					<FormItem className="space-y-1">
+						<FormLabel>Email</FormLabel>
+						<FormControl>
+							<Input
+								placeholder="name@example.com"
+								value={field.state.value}
+								onBlur={field.handleBlur}
+								onChange={(e) => field.handleChange(e.target.value)}
+							/>
+						</FormControl>
+						<FormMessage />
+					</FormItem>
+				)}
+			/>
+			<form.Subscribe
+				selector={(state) => [state.canSubmit, state.isSubmitting]}
+				// biome-ignore lint/correctness/noChildrenProp: TanStack Form requires children as a prop
+				children={([canSubmit, isSubmitting]) => (
+					<Button
+						type="submit"
+						className="mt-2"
+						disabled={!canSubmit || isSubmitting || isLoading}
+					>
+						Continue
+					</Button>
+				)}
+			/>
 		</Form>
 	)
 }
