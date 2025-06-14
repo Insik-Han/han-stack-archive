@@ -1,32 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-generator client {
-  provider        = "prisma-client"
-  output          = "../src/generated/prisma"
-  previewFeatures = ["driverAdapters"]
-
-  runtime                = "nodejs"
-  moduleFormat           = "esm"
-  generatedFileExtension = "ts"
-  importFileExtension    = "ts"
-}
-
-generator zod {
-  provider         = "zod-prisma-types"
-  output           = "../src/generated/zod"
-  prismaClientPath = "~/generated/prisma"
-  useMultipleFiles = true
-  // createModelTypes = false
-}
-
-datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
-}
-
-// Better Auth models
-
 model User {
   id            String    @id
   name          String
@@ -94,15 +65,4 @@ model Verification {
   updatedAt  DateTime?
 
   @@map("verification")
-}
-
-// Original models
-
-model Post {
-  id        Int     @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean @default(false)
-  author    User    @relation(fields: [authorId], references: [id])
-  authorId  String // Changed from Int to String to match User.id
 }

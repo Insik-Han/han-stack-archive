@@ -46,6 +46,7 @@
 				"useNamingConvention": "off"
 			},
 			"correctness": {
+				"noNodejsModules": "off",
 				"useImportExtensions": "off"
 			},
 			"suspicious": {
