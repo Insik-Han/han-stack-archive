@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useNavigate } from '@tanstack/react-router'
-import React from 'react'
+import React, { type ComponentProps } from 'react'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { Button } from '~/components/ui/button'
@@ -21,7 +21,7 @@ import {
 import { cn } from '~/lib/utils'
 import { showSubmittedData } from '~/utils/show-submitted-data'
 
-type OtpFormProps = React.HTMLAttributes<HTMLFormElement>
+type OtpFormProps = ComponentProps<'form'>
 
 const formSchema = z.object({
 	otp: z.string().min(1, { message: 'Please enter your otp code.' }),

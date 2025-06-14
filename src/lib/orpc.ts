@@ -4,7 +4,7 @@ import { createORPCReactQueryUtils } from '@orpc/react-query'
 import { createRouterClient } from '@orpc/server'
 import type { RouterClient } from '@orpc/server'
 import { createIsomorphicFn } from '@tanstack/react-start'
-import { getHeaders } from '@tanstack/react-start/server'
+import { getWebRequest } from '@tanstack/react-start/server'
 import { RPC_PATH_PREFIX } from '~/constants/rpc'
 import { serverRouter } from '~/server/api/router'
 
@@ -18,9 +18,12 @@ const getORPCClient = createIsomorphicFn()
 			 * only include context that's safe to reuse globally.
 			 * For per-request context, use middleware context or pass a function as the initial context.
 			 */
-			context: async () => ({
-				headers: getHeaders(),
-			}),
+			context: () => {
+				const { headers } = getWebRequest()
+				return {
+					headers,
+				}
+			},
 		}),
 	)
 	.client((): RouterClient<typeof serverRouter> => {

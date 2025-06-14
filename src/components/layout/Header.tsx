@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { type ComponentProps } from 'react'
 import { Search } from '~/features/global-search/components/SearchButton'
 import { ThemeSwitch } from '~/features/theme/components/ThemeSwitch'
 import { cn } from '~/lib/utils'
@@ -37,7 +37,7 @@ export function Header({ topNavLinks, fixed }: HeaderProps) {
 	)
 }
 
-interface HeaderWrapperProps extends React.HTMLAttributes<HTMLElement> {
+interface HeaderWrapperProps extends ComponentProps<'header'> {
 	fixed?: boolean
 }
 

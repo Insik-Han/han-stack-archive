@@ -4,7 +4,9 @@ import { serverHandler } from '~/server/handler'
 
 async function handle({ request }: { request: Request }) {
 	const { response } = await serverHandler.handle(request, {
-		context: {}, // Provide initial context if needed
+		context: {
+			headers: request.headers,
+		}, // Provide initial context if needed
 		prefix: RPC_PATH_PREFIX,
 	})
 

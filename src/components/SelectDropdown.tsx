@@ -9,7 +9,7 @@ import {
 	SelectValue,
 } from './ui/select'
 
-interface SelectDropdownProps {
+interface Props {
 	onValueChange?: (value: string) => void
 	defaultValue: string | undefined
 	placeholder?: string
@@ -29,7 +29,7 @@ export function SelectDropdown({
 	disabled,
 	className = '',
 	isControlled = false,
-}: SelectDropdownProps) {
+}: Props) {
 	const defaultState = isControlled
 		? { value: defaultValue, onValueChange }
 		: { defaultValue, onValueChange }

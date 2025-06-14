@@ -46,6 +46,7 @@
 				"useNamingConvention": "off"
 			},
 			"correctness": {
+				"noNodejsModules": "off",
 				"useImportExtensions": "off"
 			},
 			"suspicious": {
@@ -73,19 +74,21 @@
 					"correctness": {
 						"useExhaustiveDependencies": "off"
 					},
+					"nursery": {
+						"noRestrictedImports": "off"
+					},
 					"style": {
 						"useImportType": "off"
 					}
 				}
 			}
 		},
-		// Common components used to override Radix UI components
 		{
-			"include": ["src/components/ui/**/*.tsx"],
+			"include": ["prisma/seed.ts"],
 			"linter": {
 				"rules": {
-					"nursery": {
-						"noRestrictedImports": "off"
+					"suspicious": {
+						"noConsoleLog": "off"
 					}
 				}
 			}
