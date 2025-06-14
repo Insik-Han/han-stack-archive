@@ -50,7 +50,7 @@
 ### 前提条件
 
 - Node.js (v20以上)
-- npm
+- pnpm
 
 ### インストール
 
@@ -70,19 +70,19 @@
 3. 依存関係をインストール
 
    ```bash
-   npm ci
+   pnpm install --frozen-lockfile
    ```
 
 4. Prismaクライアントを生成
 
    ```bash
-   npm run generate
+   pnpm run generate
    ```
 
 5. 開発サーバーを起動
 
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 ## 開発
@@ -142,23 +142,23 @@ prisma/                # Prismaスキーマとシードデータ
 
 #### 開発
 
-- `npm run dev` - 開発サーバーをポート3000で起動
-- `npm run build` - 本番用ビルド
-- `npm run preview` - Wranglerでプレビュー（Cloudflare Workers）
+- `pnpm run dev` - 開発サーバーをポート3000で起動
+- `pnpm run build` - 本番用ビルド
+- `pnpm run preview` - Wranglerでプレビュー（Cloudflare Workers）
 
 #### データベース
 
-- `npm run generate` - PrismaクライアントとZod型を生成
-- `npm run prisma:studio` - Prisma Studio GUIを開く
-- `npm run db:seed` - テストデータでデータベースをシード
-- `npm run db:reset` - データベースとマイグレーションをリセット
-- `npm run migrate:dev` - 開発環境でPrismaマイグレーションを実行
-- `npm run migrate` - 本番環境にマイグレーションをデプロイ
+- `pnpm run generate` - PrismaクライアントとZod型を生成
+- `pnpm run prisma:studio` - Prisma Studio GUIを開く
+- `pnpm run db:seed` - テストデータでデータベースをシード
+- `pnpm run db:reset` - データベースとマイグレーションをリセット
+- `pnpm run migrate:dev` - 開発環境でPrismaマイグレーションを実行
+- `pnpm run migrate` - 本番環境にマイグレーションをデプロイ
 
 #### コード品質
 
-- `npm run biome` - Biomeでコードをフォーマット＆リント
-- `npm run tsc` - TypeScript型チェックを実行
+- `pnpm run biome` - Biomeでコードをフォーマット＆リント
+- `pnpm run tsc` - TypeScript型チェックを実行
 
 ## デプロイ
 

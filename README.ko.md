@@ -50,7 +50,7 @@
 ### 사전 요구사항
 
 - Node.js (v20 이상)
-- npm
+- pnpm
 
 ### 설치
 
@@ -70,19 +70,19 @@
 3. 의존성 설치
 
    ```bash
-   npm ci
+   pnpm install --frozen-lockfile
    ```
 
 4. Prisma 클라이언트 생성
 
    ```bash
-   npm run generate
+   pnpm run generate
    ```
 
 5. 개발 서버 시작
 
    ```bash
-   npm run dev
+   pnpm run dev
    ```
 
 ## 개발
@@ -142,23 +142,23 @@ prisma/                # Prisma 스키마 및 시드 데이터
 
 #### 개발
 
-- `npm run dev` - 포트 3000에서 개발 서버 시작
-- `npm run build` - 프로덕션 빌드
-- `npm run preview` - Wrangler로 프리뷰 (Cloudflare Workers)
+- `pnpm run dev` - 포트 3000에서 개발 서버 시작
+- `pnpm run build` - 프로덕션 빌드
+- `pnpm run preview` - Wrangler로 프리뷰 (Cloudflare Workers)
 
 #### 데이터베이스
 
-- `npm run generate` - Prisma 클라이언트 및 Zod 타입 생성
-- `npm run prisma:studio` - Prisma Studio GUI 열기
-- `npm run db:seed` - 테스트 데이터로 데이터베이스 시드
-- `npm run db:reset` - 데이터베이스 및 마이그레이션 리셋
-- `npm run migrate:dev` - 개발 환경에서 Prisma 마이그레이션 실행
-- `npm run migrate` - 프로덕션에 마이그레이션 배포
+- `pnpm run generate` - Prisma 클라이언트 및 Zod 타입 생성
+- `pnpm run prisma:studio` - Prisma Studio GUI 열기
+- `pnpm run db:seed` - 테스트 데이터로 데이터베이스 시드
+- `pnpm run db:reset` - 데이터베이스 및 마이그레이션 리셋
+- `pnpm run migrate:dev` - 개발 환경에서 Prisma 마이그레이션 실행
+- `pnpm run migrate` - 프로덕션에 마이그레이션 배포
 
 #### 코드 품질
 
-- `npm run biome` - Biome으로 코드 포맷 및 린트
-- `npm run tsc` - TypeScript 타입 검사 실행
+- `pnpm run biome` - Biome으로 코드 포맷 및 린트
+- `pnpm run tsc` - TypeScript 타입 검사 실행
 
 ## 배포
 
