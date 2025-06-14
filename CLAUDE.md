@@ -70,10 +70,11 @@ Each feature in `src/features/` contains:
 
 #### Authentication Architecture
 - Better Auth configuration in `src/lib/auth/server.ts`
-- All auth operations go through ORPC router
+- Client auth operations use `authClient` from `src/lib/auth/client.ts`
 - Email/password authentication enabled
 - SQLite database for development and production
 - Session management with cookie caching
+- API routes protected with authentication middleware
 
 #### State Management
 - Server state: TanStack Query
@@ -84,6 +85,25 @@ Each feature in `src/features/` contains:
 - UI components use CVA (class-variance-authority) for variants
 - Follow existing patterns in `src/components/ui/`
 - Dark mode support via theme context
+- Reusable data tables use `src/components/data-table/` components
+
+#### DataTable Component
+For displaying tabular data with sorting, filtering, and pagination:
+```typescript
+import { DataTable } from '~/components/data-table'
+
+<DataTable
+  columns={columns}
+  data={data}
+  config={{
+    searchColumn: 'name',
+    searchPlaceholder: 'Search...',
+    facetedFilters: [
+      { column: 'status', title: 'Status', options: statusOptions }
+    ]
+  }}
+/>
+```
 
 ## Important Notes
 
@@ -105,6 +125,8 @@ TypeScript and Vite are configured with `~/*` mapping to `./src/*`
 ### Database
 - SQLite via Prisma for all environments
 - Schema changes require running `bun run generate`
+- Seed script uses `@faker-js/faker` to generate test data
+- Run `bun run db:seed` to populate database with sample users
 
 ### Environment
 Copy `.env.example` to `.env` for local development

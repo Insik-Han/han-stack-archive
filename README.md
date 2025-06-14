@@ -17,6 +17,8 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 - ✨ **Best Practices** - Following modern development standards
 - 🎨 **Component Architecture** - Well-organized and scalable component structure
 - 🛠️ **Developer Experience** - Enhanced with Biome configurations
+- 📊 **Reusable Data Tables** - Common DataTable component with sorting, filtering, and pagination
+- 👥 **User Management** - Built-in user administration features
 
 ## Tech Stack
 
@@ -94,6 +96,7 @@ src/
 │   ├── ui/            # Atomic/molecular UI components
 │   ├── layout/        # Layout-related components
 │   ├── errors/        # Error handling components
+│   ├── data-table/    # Reusable data table components
 │   └── ...            # Other shared components
 ├── constants/         # Application constants
 ├── features/          # Feature modules
@@ -101,6 +104,7 @@ src/
 │   ├── global-search/ # Global search features
 │   ├── settings/      # Settings features
 │   ├── tasks/         # Task management features
+│   ├── users/         # User management features
 │   └── theme/         # Theme features
 ├── hooks/             # Custom React hooks
 ├── lib/               # Shared libraries and helpers
@@ -126,7 +130,7 @@ public/                # Static files (images, favicon, etc.)
 ├── favicon.ico        # Favicon
 prisma/                # Prisma schema and seed data
 ├── schema.prisma      # Prisma DB schema
-├── seed.ts            # Seed data script
+├── seed.ts            # Seed data script (uses faker.js for test data)
 
 Other key files:
 - package.json         # Project metadata and dependencies
