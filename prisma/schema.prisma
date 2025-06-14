@@ -26,6 +26,7 @@ datasource db {
 }
 
 // Better Auth models
+
 model User {
   id            String    @id
   name          String
@@ -96,11 +97,12 @@ model Verification {
 }
 
 // Original models
+
 model Post {
   id        Int     @id @default(autoincrement())
   title     String
   content   String?
   published Boolean @default(false)
   author    User    @relation(fields: [authorId], references: [id])
-  authorId  String  // Changed from Int to String to match User.id
+  authorId  String // Changed from Int to String to match User.id
 }

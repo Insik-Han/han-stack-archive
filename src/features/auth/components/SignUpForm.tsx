@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
+import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
-import React from 'react'
+import type React from 'react'
 import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import type { z } from 'zod'
 import { PasswordInput } from '~/components/PasswordInput'
 import { Button } from '~/components/ui/button'
 import {
@@ -15,39 +16,20 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { authClient } from '~/lib/auth-client'
+import { orpc } from '~/lib/orpc'
 import { cn } from '~/lib/utils'
+import { registerSchema } from '~/schemas/auth'
 
 type SignUpFormProps = React.HTMLAttributes<HTMLFormElement>
 
-const formSchema = z
-	.object({
-		name: z.string().min(1, { message: 'Please enter your name' }),
-		email: z
-			.string()
-			.min(1, { message: 'Please enter your email' })
-			.email({ message: 'Invalid email address' }),
-		password: z
-			.string()
-			.min(1, {
-				message: 'Please enter your password',
-			})
-			.min(8, {
-				message: 'Password must be at least 8 characters long',
-			}),
-		confirmPassword: z.string(),
-	})
-	.refine((data) => data.password === data.confirmPassword, {
-		message: "Passwords don't match.",
-		path: ['confirmPassword'],
-	})
-
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
-	const [isLoading, setIsLoading] = React.useState(false)
 	const navigate = useNavigate()
+	const { mutateAsync, isPending } = useMutation(
+		orpc.auth.signUp.mutationOptions(),
+	)
 
-	const form = useForm<z.infer<typeof formSchema>>({
-		resolver: zodResolver(formSchema),
+	const form = useForm<z.infer<typeof registerSchema>>({
+		resolver: zodResolver(registerSchema),
 		defaultValues: {
 			name: '',
 			email: '',
@@ -56,18 +38,11 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 		},
 	})
 
-	async function onSubmit(data: z.infer<typeof formSchema>) {
-		setIsLoading(true)
-
+	async function onSubmit(data: z.infer<typeof registerSchema>) {
 		try {
-			const response = await authClient.signUp.email({
-				name: data.name,
-				email: data.email,
-				password: data.password,
-			})
+			const response = await mutateAsync(data)
 
-			if (response.data) {
-				// Navigate to sign in page or dashboard after successful signup
+			if (response?.token) {
 				navigate({ to: '/sign-in' })
 			}
 		} catch (_error) {
@@ -75,8 +50,6 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 			form.setError('root', {
 				message: 'Failed to create account. Please try again.',
 			})
-		} finally {
-			setIsLoading(false)
 		}
 	}
 
@@ -139,7 +112,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 						</FormItem>
 					)}
 				/>
-				<Button className="mt-2" disabled={isLoading}>
+				<Button type="submit" className="mt-2" disabled={isPending}>
 					Create Account
 				</Button>
 
@@ -159,7 +132,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 						variant="outline"
 						className="w-full"
 						type="button"
-						disabled={isLoading}
+						disabled={isPending}
 					>
 						<IconBrandGithub className="h-4 w-4" /> GitHub
 					</Button>
@@ -167,7 +140,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 						variant="outline"
 						className="w-full"
 						type="button"
-						disabled={isLoading}
+						disabled={isPending}
 					>
 						<IconBrandFacebook className="h-4 w-4" /> Facebook
 					</Button>

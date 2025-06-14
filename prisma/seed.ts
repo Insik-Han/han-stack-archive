@@ -1,4 +1,5 @@
 import { PrismaClient } from '~/generated/prisma'
+import { auth } from '~/server/auth'
 
 const prisma = new PrismaClient()
 
@@ -11,15 +12,11 @@ async function seed() {
 		return
 	}
 
-	// Create a test user
-	await prisma.user.create({
-		data: {
-			id: '1',
-			email: 'example@example.com',
-			emailVerified: true,
-			name: 'example',
-			createdAt: '2025-05-05',
-			updatedAt: '2025-05-05',
+	await auth.api.signUpEmail({
+		body: {
+			name: 'Admin',
+			email: 'admin@example.com',
+			password: 'admin123',
 		},
 	})
 
