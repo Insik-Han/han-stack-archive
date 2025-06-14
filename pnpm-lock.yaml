@@ -42,13 +42,13 @@ importers:
         specifier: ^5.80.7
         version: 5.80.7(react@19.1.0)
       '@tanstack/react-router':
-        specifier: ^1.121.2
+        specifier: ^1.121.12
         version: 1.121.12(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tanstack/react-router-with-query':
-        specifier: ^1.121.2
+        specifier: ^1.121.12
         version: 1.121.12(@tanstack/react-query@5.80.7(react@19.1.0))(@tanstack/react-router@1.121.12(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@tanstack/router-core@1.121.12)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
       '@tanstack/react-start':
-        specifier: ^1.121.7
+        specifier: ^1.121.12
         version: 1.121.12(@tanstack/react-router@1.121.12(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@vitejs/plugin-react@4.5.2(vite@6.3.5(@types/node@24.0.1)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.42.0)(tsx@4.20.3)))(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(vite@6.3.5(@types/node@24.0.1)(jiti@2.4.2)(lightningcss@1.30.1)(terser@5.42.0)(tsx@4.20.3))
       '@tanstack/react-table':
         specifier: ^8.21.3
@@ -106,7 +106,7 @@ importers:
         specifier: 1.9.4
         version: 1.9.4
       '@cloudflare/workers-types':
-        specifier: ^4.20250613.0
+        specifier: ^4.20250614.0
         version: 4.20250614.0
       '@faker-js/faker':
         specifier: ^9.8.0
@@ -115,7 +115,7 @@ importers:
         specifier: ^5.80.7
         version: 5.80.7(@tanstack/react-query@5.80.7(react@19.1.0))(react@19.1.0)
       '@tanstack/react-router-devtools':
-        specifier: ^1.121.8
+        specifier: ^1.121.12
         version: 1.121.12(@tanstack/react-router@1.121.12(react-dom@19.1.0(react@19.1.0))(react@19.1.0))(@tanstack/router-core@1.121.12)(csstype@3.1.3)(react-dom@19.1.0(react@19.1.0))(react@19.1.0)(solid-js@1.9.7)(tiny-invariant@1.3.3)
       '@types/react':
         specifier: ^19.1.8
@@ -8919,7 +8919,7 @@ snapshots:
 
   parse-json@8.3.0:
     dependencies:
-      '@babel/code-frame': 7.26.2
+      '@babel/code-frame': 7.27.1
       index-to-position: 1.1.0
       type-fest: 4.41.0
 
