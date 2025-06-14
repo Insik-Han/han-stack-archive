@@ -8,9 +8,7 @@ export default defineConfig({
 		tsConfigPaths({
 			projects: ['./tsconfig.json'],
 		}),
-		tanstackStart({
-			target: 'cloudflare-module',
-		}),
+		tanstackStart(),
 		tailwindcss(),
 	],
 	resolve: {

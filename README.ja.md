@@ -35,7 +35,7 @@
 - [TanStack Start](https://tanstack.com/start/latest) - フルスタックフレームワーク
 - [ORPC](https://orpc.unnoq.com) - エンドツーエンドの型安全性を実現するRPC
 - [Prisma](https://www.prisma.io/) - モダンなデータベースORM
-- [Cloudflare Workers](https://workers.cloudflare.com) - エッジランタイムデプロイ
+- [Better Auth](https://better-auth.com) - 認証フレームワーク
 
 ### 開発 & ツーリング
 
@@ -112,10 +112,11 @@ src/
 │   ├── (errors)/      # エラーページ
 │   └── __root.tsx     # ルートエントリー
 ├── server/            # バックエンド/サーバーロジック
-│   ├── routes/        # サーバーサイドルート
-│   ├── handler.ts     # サーバーハンドラー
-│   ├── prisma.ts      # Prismaインスタンス
-│   └── router.ts      # サーバールーター
+│   ├── api/           # APIエンドポイント
+│   │   ├── routes/    # APIルートハンドラー
+│   │   └── router.ts  # APIルーター
+│   ├── handler.ts     # RPCハンドラー
+│   └── db.ts          # データベース接続
 ├── styles/            # グローバルおよびコンポーネントスタイル
 ├── utils/             # ユーティリティ関数
 ├── router.tsx         # クライアントルーター
@@ -132,8 +133,8 @@ prisma/                # Prismaスキーマとシードデータ
 - package.json         # プロジェクトメタデータと依存関係
 - tsconfig.json        # TypeScript設定
 - postcss.config.js    # PostCSS設定
-- wrangler.jsonc       # Cloudflare Workers設定
 - biome.jsonc          # Biome（フォーマッター/リンター）設定
+- CLAUDE.md            # Claude AIアシスタント用ガイドライン
 ```
 
 各ディレクトリとファイルの詳細については、コードとコメントを参照してください。
@@ -144,7 +145,7 @@ prisma/                # Prismaスキーマとシードデータ
 
 - `bun run dev` - 開発サーバーをポート3000で起動
 - `bun run build` - 本番用ビルド
-- `bun run preview` - Wranglerでプレビュー（Cloudflare Workers）
+- `bun run start` - 本番サーバーを起動
 
 #### データベース
 
@@ -162,9 +163,7 @@ prisma/                # Prismaスキーマとシードデータ
 
 ## デプロイ
 
-### Cloudflare Workers
-
-Cloudflare Workersへのデプロイについては、[こちら](https://github.com/backpine/tanstack-start-beta-on-cloudflare)のガイドに従ってください。
+アプリケーションは任意のNode.jsホスティングプラットフォームにデプロイできます。`bun run build`でプロジェクトをビルドした後、`bun run start`で本番サーバーを起動できます。
 
 ## ライセンス
 

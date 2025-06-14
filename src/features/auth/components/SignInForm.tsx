@@ -1,7 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-import { useMutation } from '@tanstack/react-query'
-import { Link, useNavigate } from '@tanstack/react-router'
+import { Link } from '@tanstack/react-router'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
 import { PasswordInput } from '~/components/PasswordInput'
@@ -15,14 +14,11 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { orpc } from '~/lib/orpc'
+import { useSignIn } from '~/features/auth/hooks/use-auth'
 import { loginSchema } from '~/schemas/auth'
 
 export function SignInForm() {
-	const navigate = useNavigate()
-	const { mutateAsync, isPending } = useMutation(
-		orpc.auth.signIn.mutationOptions(),
-	)
+	const { mutateAsync, isPending } = useSignIn()
 
 	const form = useForm<z.infer<typeof loginSchema>>({
 		resolver: zodResolver(loginSchema),
@@ -34,12 +30,7 @@ export function SignInForm() {
 
 	async function onSubmit(data: z.infer<typeof loginSchema>) {
 		try {
-			const response = await mutateAsync(data)
-
-			if (response?.token) {
-				// Navigate to dashboard or home page after successful login
-				navigate({ to: '/' })
-			}
+			await mutateAsync(data)
 		} catch (_error) {
 			// Handle error
 			form.setError('root', {

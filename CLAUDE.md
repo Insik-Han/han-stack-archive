@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ```bash
 bun run dev          # Start dev server on port 3000
 bun run build        # Production build with Vite
-bun run preview      # Preview with Wrangler (Cloudflare Workers)
+bun run start        # Start production server
 ```
 
 ### Database
@@ -41,9 +41,9 @@ Pre-commit hooks run automatically:
 ### Tech Stack
 - **Frontend**: React 19.1, TanStack Router/Query/Start, Vite, Tailwind CSS v4
 - **UI Components**: Radix UI + shadcn/ui components in `src/components/ui/`
-- **Backend**: ORPC for type-safe RPC, Prisma ORM with SQLite/Cloudflare D1
-- **Authentication**: Better Auth with Cloudflare D1 integration
-- **Deployment**: Cloudflare Workers (configured in wrangler.jsonc)
+- **Backend**: ORPC for type-safe RPC, Prisma ORM with SQLite
+- **Authentication**: Better Auth with session management
+- **Deployment**: Node.js server with TanStack Start
 
 ### Key Patterns
 
@@ -63,17 +63,17 @@ Each feature in `src/features/` contains:
 - `data/` - Mock data or constants
 
 #### Server Architecture
-- All server code in `src/server/` is marked with 'server only'
-- ORPC router defines type-safe procedures in `src/server/router.ts`
-- Add new API routes in `src/server/routes/`
-- Prisma operations use the singleton from `src/server/prisma.ts`
+- All server code in `src/server/` uses TanStack Start's `serverOnly`
+- ORPC router defines type-safe procedures in `src/server/api/router.ts`
+- Add new API routes in `src/server/api/routes/`
+- Prisma operations use the singleton from `src/server/db.ts`
 
 #### Authentication Architecture
-- Better Auth configuration in `src/server/auth.ts`
-- Client-side auth in `src/lib/auth-client.ts`
+- Better Auth configuration in `src/lib/auth/server.ts`
+- All auth operations go through ORPC router
 - Email/password authentication enabled
-- Cloudflare D1 adapter for production
-- Session data includes geolocation info via Cloudflare
+- SQLite database for development and production
+- Session management with cookie caching
 
 #### State Management
 - Server state: TanStack Query
@@ -103,8 +103,7 @@ TypeScript and Vite are configured with `~/*` mapping to `./src/*`
 - No semicolons (as configured in Biome)
 
 ### Database
-- Local: SQLite via Prisma
-- Production: Cloudflare D1 via Prisma adapter
+- SQLite via Prisma for all environments
 - Schema changes require running `bun run generate`
 
 ### Environment

@@ -1,5 +1,4 @@
 import { os } from '@orpc/server'
-
 import {
 	UserCreateArgsSchema,
 	UserDeleteArgsSchema,
@@ -8,7 +7,7 @@ import {
 	UserSchema,
 	UserUpdateArgsSchema,
 } from '~/generated/zod'
-import { db } from '~/server/prisma'
+import { db } from '~/server/db'
 
 export const usersRouter = {
 	list: os
