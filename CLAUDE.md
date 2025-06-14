@@ -6,30 +6,30 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Development
 ```bash
-pnpm run dev          # Start dev server on port 3000
-pnpm run build        # Production build with Vite
-pnpm run preview      # Preview with Wrangler (Cloudflare Workers)
+bun run dev          # Start dev server on port 3000
+bun run build        # Production build with Vite
+bun run preview      # Preview with Wrangler (Cloudflare Workers)
 ```
 
 ### Database
 ```bash
-pnpm run generate     # Generate Prisma client and Zod types - run after schema changes
-pnpm run prisma:studio # Open Prisma Studio GUI
-pnpm run db:seed      # Seed database with test data
-pnpm run db:reset     # Reset database and migrations
-pnpm run migrate:dev  # Run Prisma migrations in dev
-pnpm run migrate      # Deploy migrations to production
+bun run generate     # Generate Prisma client and Zod types - run after schema changes
+bun run prisma:studio # Open Prisma Studio GUI
+bun run db:seed      # Seed database with test data
+bun run db:reset     # Reset database and migrations
+bun run migrate:dev  # Run Prisma migrations in dev
+bun run migrate      # Deploy migrations to production
 ```
 
 ### Code Quality
 ```bash
-pnpm run biome        # Format and lint code with Biome (replaces ESLint/Prettier)
-pnpm run tsc          # TypeScript type checking
+bun run biome        # Format and lint code with Biome (replaces ESLint/Prettier)
+bun run tsc          # TypeScript type checking
 ```
 
 ### Git Hooks
 ```bash
-pnpm lefthook install # Install git hooks (already done during setup)
+bun lefthook install # Install git hooks (already done during setup)
 ```
 
 Pre-commit hooks run automatically:
@@ -105,7 +105,7 @@ TypeScript and Vite are configured with `~/*` mapping to `./src/*`
 ### Database
 - Local: SQLite via Prisma
 - Production: Cloudflare D1 via Prisma adapter
-- Schema changes require running `pnpm run generate`
+- Schema changes require running `bun run generate`
 
 ### Environment
 Copy `.env.example` to `.env` for local development
@@ -148,8 +148,8 @@ Follow these steps for all code changes:
 
 4. **Make changes and verify**
    ```bash
-   pnpm run biome    # Format and lint
-   pnpm run tsc      # Type checking
+   bun run biome    # Format and lint
+   bun run tsc      # Type checking
    ```
 
 5. **Create Pull Request**
