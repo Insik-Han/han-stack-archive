@@ -5,7 +5,7 @@ on:
     types: [synchronize, opened, reopened, ready_for_review]
     paths:
       - '.github/workflows/ci.yml'
-      - 'pnpm-lock.yaml'
+      - 'bun.lock'
       - 'package.json'
       - 'prisma/**'
       - 'src/**'
@@ -30,25 +30,23 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-
 
       - name: 🏄 Copy test env vars
         run: cp .env.example .env
 
-      - name: 📥 Install pnpm
-        uses: pnpm/action-setup@v4
+      - name: 📥 Install bun
+        uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.2.16
 
       - name: 📥 Download deps
-        run: pnpm install --frozen-lockfile
+        run: bun install
 
       - name: 🛠 Setup Database
-        run: pnpm run migrate && pnpm run generate
+        run: bun run migrate && bun run generate
 
       - name: 🔎 Type check
-        run: pnpm run tsc
+        run: bun run tsc
 
   # vitest:
   #   permissions:
@@ -57,21 +55,17 @@ jobs:
   #   runs-on: ubuntu-latest
   #   steps:
   #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
 
-  #     - name: 📥 Install pnpm
-  #       uses: pnpm/action-setup@v4
+  #     - name: 📥 Install bun
+  #       uses: oven-sh/setup-bun@v2
   #       with:
-  #         version: 9
-  #         run_install: false
+  #         bun-version: 1.2.16
   #
   #     - name: 📥 Download deps
-  #       run: pnpm install --frozen-lockfile
+  #       run: bun install
 
   #     - name: ⚡ Run vitest
-  #       run: pnpm run coverage
+  #       run: bun run coverage
 
   #     - name: 📊 Report Coverage
   #       if: always()
@@ -83,27 +77,23 @@ jobs:
   #   timeout-minutes: 60
   #   steps:
   #     - uses: actions/checkout@v4
-  #     - uses: actions/setup-node@v4
-  #       with:
-  #         node-version: 20
 
-  #     - name: 📥 Install pnpm
-  #       uses: pnpm/action-setup@v4
+  #     - name: 📥 Install bun
+  #       uses: oven-sh/setup-bun@v2
   #       with:
-  #         version: 9
-  #         run_install: false
+  #         bun-version: 1.2.16
   #
   #     - name: 📥 Download deps
-  #       run: pnpm install --frozen-lockfile
+  #       run: bun install
 
   #     - name: 📥 Install Playwright Browsers
-  #       run: pnpm exec playwright install --with-deps chromium
+  #       run: bun x playwright install --with-deps chromium
 
   #     - name: 🏗 Build
-  #       run: pnpm run build
+  #       run: bun run build
 
   #     - name: 🎭 Playwright tests
-  #       run: pnpm run test:e2e
+  #       run: bun run test:e2e
 
   #     - name: 📊 Upload report
   #       uses: actions/upload-artifact@v4

@@ -50,7 +50,7 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 ### Prerequisites
 
 - Node.js (v20 or higher)
-- pnpm
+- bun
 
 ### Installation
 
@@ -70,19 +70,19 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 3. Install dependencies
 
    ```bash
-   pnpm install --frozen-lockfile
+   bun install --frozen-lockfile
    ```
 
 4. Generate Prisma client
 
    ```bash
-   pnpm run generate
+   bun run generate
    ```
 
 5. Start the development server
 
    ```bash
-   pnpm run dev
+   bun run dev
    ```
 
 ## Development
@@ -142,23 +142,23 @@ Refer to the code and comments for more details on each directory and file.
 
 #### Development
 
-- `pnpm run dev` - Start development server on port 3000
-- `pnpm run build` - Build for production
-- `pnpm run preview` - Preview with Wrangler (Cloudflare Workers)
+- `bun run dev` - Start development server on port 3000
+- `bun run build` - Build for production
+- `bun run preview` - Preview with Wrangler (Cloudflare Workers)
 
 #### Database
 
-- `pnpm run generate` - Generate Prisma client and Zod types
-- `pnpm run prisma:studio` - Open Prisma Studio GUI
-- `pnpm run db:seed` - Seed database with test data
-- `pnpm run db:reset` - Reset database and migrations
-- `pnpm run migrate:dev` - Run Prisma migrations in development
-- `pnpm run migrate` - Deploy migrations to production
+- `bun run generate` - Generate Prisma client and Zod types
+- `bun run prisma:studio` - Open Prisma Studio GUI
+- `bun run db:seed` - Seed database with test data
+- `bun run db:reset` - Reset database and migrations
+- `bun run migrate:dev` - Run Prisma migrations in development
+- `bun run migrate` - Deploy migrations to production
 
 #### Code Quality
 
-- `pnpm run biome` - Format and lint code with Biome
-- `pnpm run tsc` - Run TypeScript type checking
+- `bun run biome` - Format and lint code with Biome
+- `bun run tsc` - Run TypeScript type checking
 
 ## Deployment
 
