@@ -1,11 +1,12 @@
-import { Outlet, createFileRoute } from '@tanstack/react-router'
+import { Outlet, createFileRoute, redirect } from '@tanstack/react-router'
 import { createServerFn } from '@tanstack/react-start'
-import { getCookie } from '@tanstack/react-start/server'
+import { getCookie, getWebRequest } from '@tanstack/react-start/server'
 import { SkipToMain } from '~/components/SkipToMain'
 import { AppSidebar } from '~/components/layout/AppSidebar'
 import { SIDEBAR_COOKIE_NAME, SidebarProvider } from '~/components/ui/sidebar'
 import { SearchProvider } from '~/features/global-search/contexts/search-context'
 import { cn } from '~/lib/utils'
+import { auth } from '~/server/auth'
 
 const getSidebarCookie = createServerFn().handler(() => {
 	const cookie = getCookie(SIDEBAR_COOKIE_NAME)
@@ -15,6 +16,15 @@ const getSidebarCookie = createServerFn().handler(() => {
 export const Route = createFileRoute('/_admin-console')({
 	component: RouteComponent,
 	loader: async () => {
+		const { headers } = getWebRequest()
+		const authInfo = await auth.api.getSession({ headers })
+
+		if (!authInfo?.session) {
+			throw redirect({
+				to: '/sign-in',
+			})
+		}
+
 		const sidebarState = await getSidebarCookie()
 		return { sidebarState }
 	},

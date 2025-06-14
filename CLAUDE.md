@@ -78,8 +78,11 @@ Each feature in `src/features/` contains:
 
 ## Important Notes
 
+### OSS Documentation
+When retrieving information about OSS libraries and frameworks, always use Context7 (configured in .mcp.json) to access up-to-date documentation.
+
 ### React Best Practices
-Avoid `useEffect` when possible. Use ref callbacks, event handlers with `flushSync`, CSS, `useSyncExternalStore`, etc. instead. See `.cursor/rules/avoid-use-effect.mdc` for examples.
+Avoid `useEffect` when possible. Use ref callbacks, event handlers with `flushSync`, CSS, `useSyncExternalStore`, etc. instead.
 
 ### Path Aliases
 TypeScript and Vite are configured with `~/*` mapping to `./src/*`

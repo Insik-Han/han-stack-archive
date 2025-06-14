@@ -1,4 +1,3 @@
-import { faker } from '@faker-js/faker'
 import { PrismaClient } from '~/generated/prisma'
 
 const prisma = new PrismaClient()
@@ -15,9 +14,12 @@ async function seed() {
 	// Create a test user
 	await prisma.user.create({
 		data: {
-			id: 1,
-			name: faker.person.fullName(),
-			email: faker.internet.email(),
+			id: '1',
+			email: 'example@example.com',
+			emailVerified: true,
+			name: 'example',
+			createdAt: '2025-05-05',
+			updatedAt: '2025-05-05',
 		},
 	})
 

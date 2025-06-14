@@ -172,7 +172,6 @@ const ApiAuthSplatServerRoute = ApiAuthSplatServerRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof AdminConsoleIndexRoute
-  '': typeof AdminConsoleRouteRouteWithChildren
   '/settings': typeof AdminConsoleSettingsRouteRouteWithChildren
   '/forgot-password': typeof authForgotPasswordRoute
   '/otp': typeof authOtpRoute
@@ -246,7 +245,6 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | ''
     | '/settings'
     | '/forgot-password'
     | '/otp'
