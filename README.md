@@ -3,7 +3,7 @@
 [![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ja.md)
 [![ko](https://img.shields.io/badge/lang-ko-blue.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ko.md)
 
-> This template is currently under development. Example code will be added soon, but it's ready for production use. (Depends on Tanstack start version)
+> **⚠️ Note**: This template is currently under active development. The underlying framework (TanStack Start) is experiencing issues that may affect stability. Example code and documentation improvements are in progress.
 
 A powerful, full-stack SaaS starter template built with modern technologies. This template provides a solid foundation for building scalable SaaS applications with best practices and industry-standard tools.
 
@@ -32,7 +32,7 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 
 ### Backend & API
 
-- [TanStack Start](https://tanstack.com/start/latest) - Full-stack framework
+- [TanStack Start](https://tanstack.com/start/latest) - Full-stack framework (Beta)
 - [ORPC](https://orpc.unnoq.com) - Type-safe RPC for end-to-end type safety
 - [Prisma](https://www.prisma.io/) - Modern database ORM
 - [Cloudflare Workers](https://workers.cloudflare.com) - Edge runtime deployment
