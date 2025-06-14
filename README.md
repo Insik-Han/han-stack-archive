@@ -35,7 +35,7 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 - [TanStack Start](https://tanstack.com/start/latest) - Full-stack framework (Beta)
 - [ORPC](https://orpc.unnoq.com) - Type-safe RPC for end-to-end type safety
 - [Prisma](https://www.prisma.io/) - Modern database ORM
-- [Cloudflare Workers](https://workers.cloudflare.com) - Edge runtime deployment
+- [Better Auth](https://better-auth.com) - Authentication framework
 
 ### Development & Tooling
 
@@ -49,7 +49,6 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 
 ### Prerequisites
 
-- Node.js (v20 or higher)
 - bun
 
 ### Installation
@@ -70,7 +69,7 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 3. Install dependencies
 
    ```bash
-   bun install --frozen-lockfile
+   bun install
    ```
 
 4. Generate Prisma client
@@ -112,10 +111,11 @@ src/
 │   ├── (errors)/      # Error pages
 │   └── __root.tsx     # Root route entry
 ├── server/            # Backend/server logic
-│   ├── routes/        # Server-side routes
-│   ├── handler.ts     # Server handler
-│   ├── prisma.ts      # Prisma instance
-│   └── router.ts      # Server router
+│   ├── api/           # API endpoints
+│   │   ├── routes/    # API route handlers
+│   │   └── router.ts  # API router
+│   ├── handler.ts     # RPC handler
+│   └── db.ts          # Database connection
 ├── styles/            # Global and component styles
 ├── utils/             # Utility functions
 ├── router.tsx         # Client router
@@ -132,8 +132,8 @@ Other key files:
 - package.json         # Project metadata and dependencies
 - tsconfig.json        # TypeScript configuration
 - postcss.config.js    # PostCSS configuration
-- wrangler.jsonc       # Cloudflare Workers configuration
 - biome.jsonc          # Biome (formatter/linter) configuration
+- CLAUDE.md            # Guidelines for Claude AI assistant
 ```
 
 Refer to the code and comments for more details on each directory and file.
@@ -144,7 +144,7 @@ Refer to the code and comments for more details on each directory and file.
 
 - `bun run dev` - Start development server on port 3000
 - `bun run build` - Build for production
-- `bun run preview` - Preview with Wrangler (Cloudflare Workers)
+- `bun run start` - Start production server
 
 #### Database
 
@@ -162,9 +162,7 @@ Refer to the code and comments for more details on each directory and file.
 
 ## Deployment
 
-### Cloudflare Workers
-
-For deploying to Cloudflare Workers, follow the guide [here](https://github.com/backpine/tanstack-start-beta-on-cloudflare).
+The application can be deployed to any Node.js hosting platform. After building the project with `bun run build`, you can start the production server with `bun run start`.
 
 ## License
 

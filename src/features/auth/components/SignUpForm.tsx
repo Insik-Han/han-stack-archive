@@ -1,7 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { IconBrandFacebook, IconBrandGithub } from '@tabler/icons-react'
-import { useMutation } from '@tanstack/react-query'
-import { useNavigate } from '@tanstack/react-router'
 import type React from 'react'
 import { useForm } from 'react-hook-form'
 import type { z } from 'zod'
@@ -16,17 +14,14 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { orpc } from '~/lib/orpc'
+import { useSignUp } from '~/features/auth/hooks/use-auth'
 import { cn } from '~/lib/utils'
 import { registerSchema } from '~/schemas/auth'
 
 type SignUpFormProps = React.HTMLAttributes<HTMLFormElement>
 
 export function SignUpForm({ className, ...props }: SignUpFormProps) {
-	const navigate = useNavigate()
-	const { mutateAsync, isPending } = useMutation(
-		orpc.auth.signUp.mutationOptions(),
-	)
+	const { mutateAsync, isPending } = useSignUp()
 
 	const form = useForm<z.infer<typeof registerSchema>>({
 		resolver: zodResolver(registerSchema),
@@ -40,11 +35,7 @@ export function SignUpForm({ className, ...props }: SignUpFormProps) {
 
 	async function onSubmit(data: z.infer<typeof registerSchema>) {
 		try {
-			const response = await mutateAsync(data)
-
-			if (response?.token) {
-				navigate({ to: '/sign-in' })
-			}
+			await mutateAsync(data)
 		} catch (_error) {
 			// Handle error
 			form.setError('root', {

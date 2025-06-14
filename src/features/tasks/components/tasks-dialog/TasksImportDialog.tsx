@@ -20,7 +20,7 @@ import {
 	FormMessage,
 } from '~/components/ui/form'
 import { Input } from '~/components/ui/input'
-import { fileSchema } from '~/utils/schema'
+import { fileSchema } from '~/schemas/upload'
 import { showSubmittedData } from '~/utils/show-submitted-data'
 
 const formSchema = z.object({
