@@ -134,7 +134,6 @@ prisma/                # Prismaスキーマとシードデータ
 その他の主要ファイル:
 - package.json         # プロジェクトメタデータと依存関係
 - tsconfig.json        # TypeScript設定
-- postcss.config.js    # PostCSS設定
 - biome.jsonc          # Biome（フォーマッター/リンター）設定
 - CLAUDE.md            # Claude AIアシスタント用ガイドライン
 ```

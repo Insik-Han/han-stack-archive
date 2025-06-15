@@ -134,7 +134,6 @@ prisma/                # Prisma schema and seed data
 Other key files:
 - package.json         # Project metadata and dependencies
 - tsconfig.json        # TypeScript configuration
-- postcss.config.js    # PostCSS configuration
 - biome.jsonc          # Biome (formatter/linter) configuration
 - CLAUDE.md            # Guidelines for Claude AI assistant
 ```
