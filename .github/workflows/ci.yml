@@ -51,6 +51,9 @@ jobs:
       - name: Setup pnpm and Dependencies
         uses: ./.github/actions/setup-pnpm
 
+      - name: 📥 Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps chromium
+
       - name: ⚡ Run vitest
         run: pnpm run coverage
 
