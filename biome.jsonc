@@ -7,11 +7,18 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
+		"include": [
+			"./src",
+			"./tests",
+			"./prisma",
+			"./scripts",
+			"./vite.config.ts",
+			"./prisma.config.ts"
+		],
 		"ignore": [
-			".vscode",
-			"src/generated",
+			"./src/generated",
+			"./src/routeTree.gen.ts",
 			"node_modules",
-			"routeTree.gen.ts",
 			"tsconfig.json"
 		]
 	},

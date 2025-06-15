@@ -1,0 +1,23 @@
+name: 'Setup pnpm'
+description: 'Install pnpm and project dependencies'
+inputs:
+  pnpm-version:
+    description: 'pnpm version to install'
+    required: false
+runs:
+  using: 'composite'
+  steps:
+    - name: 📥 Install pnpm
+      uses: pnpm/action-setup@v4
+      with:
+        version: ${{ inputs.pnpm-version }}
+    
+    - name: 📥 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'pnpm'
+    
+    - name: 📥 Download deps
+      shell: bash
+      run: pnpm install

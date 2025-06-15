@@ -21,3 +21,12 @@ node_modules/
 src/generated/
 data.db
 data.db-journal
+
+# Vitest
+/coverage
+
+# Playwright
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/

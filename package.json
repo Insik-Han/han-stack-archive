@@ -6,14 +6,21 @@
 	"scripts": {
 		"dev": "vite dev --port 3000",
 		"build": "vite build",
-		"start": "bun run .output/server/index.js",
+		"setup": "pnpm generate && pnpm migrate && playwright install",
+		"start": "node .output/server/index.mjs",
 		"generate": "prisma generate zod",
 		"prisma:studio": "prisma studio",
 		"db:seed": "prisma db seed",
 		"db:reset": "prisma migrate reset",
 		"migrate:dev": "prisma migrate dev",
 		"migrate": "prisma migrate deploy",
-		"biome": "biome check --write --unsafe ./src",
+		"test": "vitest run",
+		"coverage": "vitest run --coverage",
+		"test:unit": "vitest run --project unit",
+		"test:ui": "vitest run --project ui",
+		"test:e2e": "playwright test",
+		"test:e2e:ui": "playwright test --ui",
+		"biome": "biome check --write --unsafe",
 		"tsc": "tsc -b --incremental"
 	},
 	"dependencies": {
@@ -29,7 +36,7 @@
 		"@tanstack/react-query": "^5.80.7",
 		"@tanstack/react-router": "^1.121.12",
 		"@tanstack/react-router-with-query": "^1.121.12",
-		"@tanstack/react-start": "^1.121.12",
+		"@tanstack/react-start": "^1.121.13",
 		"@tanstack/react-table": "^8.21.3",
 		"better-auth": "^1.2.9",
 		"class-variance-authority": "^0.7.1",
@@ -52,16 +59,23 @@
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
 		"@faker-js/faker": "^9.8.0",
+		"@playwright/test": "^1.53.0",
 		"@tanstack/react-query-devtools": "^5.80.7",
 		"@tanstack/react-router-devtools": "^1.121.12",
-		"@types/bun": "^1.2.16",
+		"@types/node": "^24.0.1",
 		"@types/react": "^19.1.8",
 		"@types/react-dom": "^19.1.6",
+		"@vitejs/plugin-react": "^4.5.2",
+		"@vitest/browser": "^3.2.3",
+		"@vitest/coverage-v8": "^3.2.3",
 		"lefthook": "^1.11.13",
+		"playwright": "^1.53.0",
 		"prisma": "^6.9.0",
 		"tsx": "^4.20.3",
 		"typescript": "^5.8.3",
 		"vite-tsconfig-paths": "^5.1.4",
+		"vitest": "^3.2.3",
+		"vitest-browser-react": "^0.3.0",
 		"zod-prisma-types": "^3.2.4"
 	},
 	"prisma": {
@@ -70,5 +84,8 @@
 	"overrides": {
 		"ws": ">=8.18.2"
 	},
-	"packageManager": "bun@1.2.16"
+	"engines": {
+		"node": ">=20.0.0"
+	},
+	"packageManager": "pnpm@10.12.1+sha512.f0dda8580f0ee9481c5c79a1d927b9164f2c478e90992ad268bbb2465a736984391d6333d2c327913578b2804af33474ca554ba29c04a8b13060a717675ae3ac"
 }
