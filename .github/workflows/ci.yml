@@ -55,7 +55,7 @@ jobs:
         uses: ./.github/actions/setup-database
 
       - name: 📥 Install Playwright Browsers
-        run: pnpm test:e2e:install
+        run: pnpm playwright install --with-deps chromium
 
       - name: ⚡ Run vitest
         run: pnpm coverage
@@ -78,7 +78,7 @@ jobs:
         uses: ./.github/actions/setup-database
         
       - name: 📥 Install Playwright Browsers
-        run: playwright install --with-deps chromium
+        run: pnpm playwright install --with-deps chromium
 
       - name: 🏗 Build
         run: pnpm run build
