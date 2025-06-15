@@ -1,5 +1,5 @@
-import { fakerJA as faker } from '@faker-js/faker'
-import { PrismaClient } from '../src/generated/prisma'
+import { faker } from '@faker-js/faker'
+import { PrismaClient, type User } from '../src/generated/prisma'
 
 const prisma = new PrismaClient()
 
@@ -7,7 +7,7 @@ async function seed() {
 	console.time('🌱 Database has been seeded')
 
 	// Create users
-	const users = []
+	const users: User[] = []
 	for (let i = 0; i < 50; i++) {
 		const firstName = faker.person.firstName()
 		const lastName = faker.person.lastName()
@@ -42,7 +42,7 @@ async function seed() {
 	const statuses = ['todo', 'in progress', 'done', 'canceled', 'backlog']
 	const labels = ['bug', 'feature', 'documentation']
 	const priorities = ['low', 'medium', 'high']
-	
+
 	// Sample task titles
 	const taskTitles = [
 		"You can't compress the program without quantifying the open-source SSD pixel!",
@@ -71,8 +71,9 @@ async function seed() {
 	for (let i = 0; i < 100; i++) {
 		const createdAt = faker.date.past({ years: 1 })
 		const updatedAt = faker.date.between({ from: createdAt, to: new Date() })
-		const randomUser = users.length > 0 ? faker.helpers.arrayElement(users) : null
-		
+		const randomUser =
+			users.length > 0 ? faker.helpers.arrayElement(users) : null
+
 		try {
 			await prisma.task.create({
 				data: {
@@ -89,8 +90,11 @@ async function seed() {
 			taskCount++
 		} catch (error) {
 			// Ignore duplicate ID errors
-			if (error instanceof Error && !error.message.includes('Unique constraint')) {
-				console.error(`❌ Failed to create task:`, error)
+			if (
+				error instanceof Error &&
+				!error.message.includes('Unique constraint')
+			) {
+				console.error('❌ Failed to create task:', error)
 			}
 		}
 	}
