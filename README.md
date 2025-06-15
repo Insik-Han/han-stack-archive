@@ -3,8 +3,6 @@
 [![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ja.md)
 [![ko](https://img.shields.io/badge/lang-ko-blue.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ko.md)
 
-> **⚠️ Note**: This template is currently under active development. The underlying framework (TanStack Start) is experiencing issues that may affect stability. Example code and documentation improvements are in progress.
-
 A powerful, full-stack SaaS starter template built with modern technologies. This template provides a solid foundation for building scalable SaaS applications with best practices and industry-standard tools.
 
 ## Features
@@ -51,7 +49,8 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 
 ### Prerequisites
 
-- bun
+- Node.js 20+
+- pnpm
 
 ### Installation
 
@@ -71,19 +70,19 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 3. Install dependencies
 
    ```bash
-   bun install
+   pnpm install
    ```
 
 4. Generate Prisma client
 
    ```bash
-   bun run generate
+   pnpm run generate
    ```
 
 5. Start the development server
 
    ```bash
-   bun run dev
+   pnpm run dev
    ```
 
 ## Development
@@ -146,27 +145,292 @@ Refer to the code and comments for more details on each directory and file.
 
 #### Development
 
-- `bun run dev` - Start development server on port 3000
-- `bun run build` - Build for production
-- `bun run start` - Start production server
+- `pnpm run dev` - Start development server on port 3000
+- `pnpm run build` - Build for production
+- `pnpm run start` - Start production server
 
 #### Database
 
-- `bun run generate` - Generate Prisma client and Zod types
-- `bun run prisma:studio` - Open Prisma Studio GUI
-- `bun run db:seed` - Seed database with test data
-- `bun run db:reset` - Reset database and migrations
-- `bun run migrate:dev` - Run Prisma migrations in development
-- `bun run migrate` - Deploy migrations to production
+- `pnpm run generate` - Generate Prisma client and Zod types
+- `pnpm run prisma:studio` - Open Prisma Studio GUI
+- `pnpm run db:seed` - Seed database with test data
+- `pnpm run db:reset` - Reset database and migrations
+- `pnpm run migrate:dev` - Run Prisma migrations in development
+- `pnpm run migrate` - Deploy migrations to production
 
 #### Code Quality
 
-- `bun run biome` - Format and lint code with Biome
-- `bun run tsc` - Run TypeScript type checking
+- `pnpm run biome` - Format and lint code with Biome
+- `pnpm run tsc` - Run TypeScript type checking
+
+#### Testing
+
+- `pnpm run test` - Run all tests
+- `pnpm run test:unit` - Run unit tests
+- `pnpm run test:ui` - Run UI tests
+- `pnpm run test:e2e` - Run E2E tests with Playwright
+- `pnpm run test:e2e:ui` - Run E2E tests with Playwright UI mode
+- `pnpm run coverage` - Run tests with coverage report
+
+## Testing
+
+The project uses different testing approaches based on the testing scope:
+
+- **Unit Tests** (`*.unit.spec.ts`) - Fast, isolated tests running in Node.js environment
+- **UI Tests** (`*.ui.spec.ts`) - Component tests running in a real browser environment
+- **E2E Tests** (`*.test.ts`) - End-to-end tests using Playwright
+
+### Test Configuration
+
+#### Vitest Configuration
+
+The project uses Vitest with two separate test projects configured in `vite.config.ts`:
+
+```typescript
+test: {
+  projects: [
+    {
+      test: {
+        name: 'unit',
+        include: ['src/**/*.unit.spec.{ts,tsx}'],
+      },
+    },
+    {
+      test: {
+        name: 'ui',
+        include: ['src/**/*.ui.spec.{ts,tsx}'],
+        browser: {
+          enabled: true,
+          provider: 'playwright',
+          instances: [{ browser: 'chromium' }],
+          headless: true,
+        },
+      },
+    },
+  ],
+}
+```
+
+#### Playwright Configuration
+
+E2E tests are configured in `playwright.config.ts` with:
+
+- Test directory: `./tests/e2e`
+- Base URL: `http://localhost:3000`
+- Browsers: Chromium and WebKit
+- Automatic dev server startup
+
+### Running Tests
+
+#### Unit Tests
+
+```bash
+# Run all unit tests
+pnpm run test:unit
+
+# Run tests in watch mode
+pnpm run test:unit --watch
+
+# Run specific test file
+pnpm run test src/schemas/upload.unit.spec.ts
+```
+
+#### UI Tests
+
+```bash
+# Run all UI tests
+pnpm run test:ui
+
+# Run in watch mode
+pnpm run test:ui --watch
+```
+
+#### E2E Tests
+
+```bash
+# Run all E2E tests
+pnpm run test:e2e
+
+# Run specific test
+pnpm exec playwright test tests/e2e/example.test.ts
+
+# Run with UI mode for debugging
+pnpm run test:e2e:ui
+```
+
+### Writing Tests
+
+#### Unit Tests
+
+Unit tests are for testing pure logic, utilities, and server-side code:
+
+```typescript
+// src/schemas/upload.unit.spec.ts
+import { describe, expect, it } from "vitest";
+import { fileSchema } from "./upload";
+
+describe("fileSchema", () => {
+  it("should accept any value in Node.js environment", () => {
+    expect(fileSchema.safeParse("string").success).toBe(true);
+  });
+});
+```
+
+#### UI Tests
+
+UI tests are for testing React components with DOM interactions:
+
+```typescript
+// src/hooks/use-mobile.ui.spec.ts
+import { renderHook } from "@testing-library/react";
+import { expect, test } from "vitest";
+import { useMobile } from "./use-mobile";
+
+test("should detect mobile viewport", () => {
+  const { result } = renderHook(() => useMobile());
+  expect(result.current).toBe(false);
+});
+```
+
+#### E2E Tests
+
+E2E tests simulate real user interactions:
+
+```typescript
+// tests/e2e/example.test.ts
+import { expect, test } from "@playwright/test";
+
+test("Go to sign-in", async ({ page }) => {
+  await page.goto("/sign-in");
+
+  await expect(page.locator('[data-slot="card-title"]')).toHaveText("Login");
+  await expect(page.getByRole("button", { name: "Login" })).toBeVisible();
+});
+```
+
+### CI/CD Integration
+
+The project uses GitHub Actions for continuous integration with optimized workflows using reusable actions:
+
+#### Reusable Actions
+
+Located in `.github/actions/`:
+
+- **setup-pnpm** - Installs pnpm and project dependencies
+- **setup-database** - Sets up test database with migrations
+
+#### CI Workflow
+
+The CI workflow (`.github/workflows/ci.yml`) runs on pull requests and includes:
+
+1. **Biome** - Code formatting and linting
+2. **TypeScript** - Type checking
+3. **Vitest** - Unit and UI tests with coverage reporting
+4. **Playwright** - E2E tests with artifact uploads
+
+### Best Practices
+
+#### Test Organization
+
+- Place unit tests next to the code they test (e.g., `schema.ts` → `schema.unit.spec.ts`)
+- Keep UI tests close to components they test
+- Group E2E tests by feature or user flow
+
+#### Test Naming
+
+- Use descriptive test names that explain what is being tested
+- Follow the pattern: "should [expected behavior] when [condition]"
+- Group related tests using `describe` blocks
+
+#### Test Data
+
+- Use factories or builders for complex test data
+- Keep test data minimal but realistic
+- Clean up test data after tests when necessary
+
+#### Assertions
+
+- Use specific assertions rather than generic ones
+- Test both positive and negative cases
+- Include edge cases in your tests
+
+### Environment Considerations
+
+#### Server-Side vs Client-Side
+
+Be aware of environment differences when writing tests:
+
+- Server-side tests run in Node.js (no DOM, no browser APIs)
+- Client-side tests need browser environment for DOM manipulation
+- Some schemas/utilities may behave differently based on environment
+
+Example from `upload.ts`:
+
+```typescript
+export const fileSchema = (
+  typeof window === "undefined" ? z.any() : z.instanceof(FileList)
+) as z.ZodType<FileList>;
+```
+
+#### Test Database
+
+- Tests use SQLite database (configured via `.env.example`)
+- Database is reset between test runs if needed
+- Use `pnpm run db:seed` to populate test data
+
+### Debugging Tests
+
+#### Vitest
+
+- Use `console.log` for quick debugging
+- Use VS Code's debugger with breakpoints
+- Run tests in UI mode: `pnpm exec vitest --ui`
+
+#### Playwright
+
+- Use `--debug` flag: `pnpm exec playwright test --debug`
+- Use `page.pause()` to pause execution
+- View traces: `pnpm exec playwright show-trace`
+- Take screenshots: `await page.screenshot({ path: 'debug.png' })`
+
+### Coverage
+
+The project aims for good test coverage. View coverage reports:
+
+```bash
+# Generate coverage report
+pnpm run coverage
+
+# Coverage is also reported in PR comments via GitHub Actions
+```
+
+### Troubleshooting
+
+#### Common Issues
+
+1. **"DataTransfer is not defined"** - This API is not available in Node.js. Use UI tests for browser-specific APIs.
+
+2. **"Element not found"** - Check selectors, ensure the page has loaded, use `page.waitForSelector()`.
+
+3. **Type errors in tests** - Ensure proper TypeScript configuration and that test types are installed.
+
+#### Tips
+
+- Run tests locally before pushing
+- Check CI logs for detailed error messages
+- Use appropriate test type for what you're testing
+- Keep tests fast and focused
+
+### Resources
+
+- [Vitest Documentation](https://vitest.dev)
+- [Playwright Documentation](https://playwright.dev)
+- [Testing Library](https://testing-library.com)
+- [React Testing Best Practices](https://kentcdodds.com/blog/common-mistakes-with-react-testing-library)
 
 ## Deployment
 
-The application can be deployed to any Node.js hosting platform. After building the project with `bun run build`, you can start the production server with `bun run start`.
+The application can be deployed to any Node.js hosting platform. After building the project with `pnpm run build`, you can start the production server with `pnpm run start`.
 
 ## License
 

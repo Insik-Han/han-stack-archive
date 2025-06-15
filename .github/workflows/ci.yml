@@ -5,7 +5,7 @@ on:
     types: [synchronize, opened, reopened, ready_for_review]
     paths:
       - '.github/workflows/ci.yml'
-      - 'bun.lock'
+      - 'pnpm-lock.yaml'
       - 'package.json'
       - 'prisma/**'
       - 'src/**'
@@ -31,74 +31,56 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: 🏄 Copy test env vars
-        run: cp .env.example .env
+      - name: Setup pnpm and Dependencies
+        uses: ./.github/actions/setup-pnpm
 
-      - name: 📥 Install bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.2.16
-
-      - name: 📥 Download deps
-        run: bun install
-
-      - name: 🛠 Setup Database
-        run: bun run migrate && bun run generate
+      - name: Setup Database
+        uses: ./.github/actions/setup-database
 
       - name: 🔎 Type check
-        run: bun run tsc
+        run: pnpm run tsc
 
-  # vitest:
-  #   permissions:
-  #     pull-requests: write
-  #   name: ⚡ Vitest
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v4
+  vitest:
+    permissions:
+      pull-requests: write
+    name: ⚡ Vitest
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: 📥 Install bun
-  #       uses: oven-sh/setup-bun@v2
-  #       with:
-  #         bun-version: 1.2.16
-  #
-  #     - name: 📥 Download deps
-  #       run: bun install
+      - name: Setup pnpm and Dependencies
+        uses: ./.github/actions/setup-pnpm
 
-  #     - name: ⚡ Run vitest
-  #       run: bun run coverage
+      - name: ⚡ Run vitest
+        run: pnpm run coverage
 
-  #     - name: 📊 Report Coverage
-  #       if: always()
-  #       uses: davelosert/vitest-coverage-report-action@v2
+      - name: 📊 Report Coverage
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
 
-  # playwright:
-  #   name: 🎭 Playwright
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 60
-  #   steps:
-  #     - uses: actions/checkout@v4
+  playwright:
+    name: 🎭 Playwright
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
 
-  #     - name: 📥 Install bun
-  #       uses: oven-sh/setup-bun@v2
-  #       with:
-  #         bun-version: 1.2.16
-  #
-  #     - name: 📥 Download deps
-  #       run: bun install
+      - name: Setup pnpm and Dependencies
+        uses: ./.github/actions/setup-pnpm
 
-  #     - name: 📥 Install Playwright Browsers
-  #       run: bun x playwright install --with-deps chromium
+      - name: 📥 Install Playwright Browsers
+        run: pnpm exec playwright install --with-deps chromium
 
-  #     - name: 🏗 Build
-  #       run: bun run build
+      - name: 🏗 Build
+        run: pnpm run build
 
-  #     - name: 🎭 Playwright tests
-  #       run: bun run test:e2e
+      - name: 🎭 Playwright tests
+        run: pnpm run test:e2e
 
-  #     - name: 📊 Upload report
-  #       uses: actions/upload-artifact@v4
-  #       if: always()
-  #       with:
-  #         name: playwright-report
-  #         path: playwright-report/
-  #         retention-days: 30
+      - name: 📊 Upload report
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30

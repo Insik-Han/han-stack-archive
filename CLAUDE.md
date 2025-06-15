@@ -6,30 +6,40 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ### Development
 ```bash
-bun run dev          # Start dev server on port 3000
-bun run build        # Production build with Vite
-bun run start        # Start production server
+pnpm run dev          # Start dev server on port 3000
+pnpm run build        # Production build with Vite
+pnpm run start        # Start production server
 ```
 
 ### Database
 ```bash
-bun run generate     # Generate Prisma client and Zod types - run after schema changes
-bun run prisma:studio # Open Prisma Studio GUI
-bun run db:seed      # Seed database with test data
-bun run db:reset     # Reset database and migrations
-bun run migrate:dev  # Run Prisma migrations in dev
-bun run migrate      # Deploy migrations to production
+pnpm run generate     # Generate Prisma client and Zod types - run after schema changes
+pnpm run prisma:studio # Open Prisma Studio GUI
+pnpm run db:seed      # Seed database with test data
+pnpm run db:reset     # Reset database and migrations
+pnpm run migrate:dev  # Run Prisma migrations in dev
+pnpm run migrate      # Deploy migrations to production
 ```
 
 ### Code Quality
 ```bash
-bun run biome        # Format and lint code with Biome (replaces ESLint/Prettier)
-bun run tsc          # TypeScript type checking
+pnpm run biome        # Format and lint code with Biome (replaces ESLint/Prettier)
+pnpm run tsc          # TypeScript type checking
+```
+
+### Testing
+```bash
+pnpm run test         # Run all tests
+pnpm run test:unit    # Run unit tests (*.unit.spec.ts files)
+pnpm run test:ui      # Run UI tests in browser (*.ui.spec.ts files)
+pnpm run test:e2e     # Run E2E tests with Playwright
+pnpm run test:e2e:ui  # Run E2E tests with Playwright UI mode
+pnpm run coverage     # Run tests with coverage report
 ```
 
 ### Git Hooks
 ```bash
-bun lefthook install # Install git hooks (already done during setup)
+pnpm lefthook install # Install git hooks (already done during setup)
 ```
 
 Pre-commit hooks run automatically:
@@ -44,6 +54,13 @@ Pre-commit hooks run automatically:
 - **Backend**: ORPC for type-safe RPC, Prisma ORM with SQLite
 - **Authentication**: Better Auth with session management
 - **Deployment**: Node.js server with TanStack Start
+
+### Testing
+- **Unit Tests**: `*.unit.spec.ts` files run in Node.js environment
+- **UI Tests**: `*.ui.spec.ts` files run in browser with Playwright
+- **E2E Tests**: `tests/e2e/*.test.ts` files for end-to-end testing
+- Test configuration in `vite.config.ts` (Vitest) and `playwright.config.ts`
+- See `TESTING.md` for comprehensive testing guide
 
 ### Key Patterns
 
@@ -124,9 +141,9 @@ TypeScript and Vite are configured with `~/*` mapping to `./src/*`
 
 ### Database
 - SQLite via Prisma for all environments
-- Schema changes require running `bun run generate`
+- Schema changes require running `pnpm run generate`
 - Seed script uses `@faker-js/faker` to generate test data
-- Run `bun run db:seed` to populate database with sample users
+- Run `pnpm run db:seed` to populate database with sample users
 
 ### Environment
 Copy `.env.example` to `.env` for local development
@@ -169,8 +186,9 @@ Follow these steps for all code changes:
 
 4. **Make changes and verify**
    ```bash
-   bun run biome    # Format and lint
-   bun run tsc      # Type checking
+   pnpm run biome    # Format and lint
+   pnpm run tsc      # Type checking
+   pnpm run test     # Run tests
    ```
 
 5. **Create Pull Request**

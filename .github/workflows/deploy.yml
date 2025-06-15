@@ -7,7 +7,7 @@ on:
       - main
     paths:
       - '.github/workflows/ci.yml'
-      - 'bun.lock'
+      - 'pnpm-lock.yaml'
       - 'package.json'
       - 'prisma/**'
       - 'src/**'
@@ -23,16 +23,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: 📥 Install bun
-        uses: oven-sh/setup-bun@v2
-        with:
-          bun-version: 1.2.16
-
-      - name: 📥 Download deps
-        run: bun install
+      - name: Setup pnpm and Dependencies
+        uses: ./.github/actions/setup-pnpm
 
       - name: Build application for Cloudflare Workers
-        run: bun run build
+        run: pnpm run build
         env:
           VITE_BASE_URL: ${{ secrets.VITE_BASE_URL }}
 
