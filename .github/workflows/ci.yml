@@ -38,7 +38,7 @@ jobs:
         uses: ./.github/actions/setup-database
 
       - name: 🔎 Type check
-        run: pnpm run tsc
+        run: pnpm tsc
 
   vitest:
     permissions:
@@ -55,10 +55,10 @@ jobs:
         uses: ./.github/actions/setup-database
 
       - name: 📥 Install Playwright Browsers
-        run: pnpm exec playwright install --with-deps chromium
+        run: pnpm test:e2e:install
 
       - name: ⚡ Run vitest
-        run: pnpm run coverage
+        run: pnpm coverage
 
       - name: 📊 Report Coverage
         if: always()
