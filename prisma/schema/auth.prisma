@@ -9,6 +9,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   posts         Post[]
+  tasks         Task[]
 
   @@unique([email])
   @@map("user")
