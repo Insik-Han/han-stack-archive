@@ -24,6 +24,7 @@ data.db-journal
 
 # Vitest
 /coverage
+__screenshots__/
 
 # Playwright
 /test-results/

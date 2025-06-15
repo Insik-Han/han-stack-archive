@@ -34,15 +34,7 @@
 		"rules": {
 			"all": true,
 			"nursery": {
-				"useConsistentCurlyBraces": "error",
-				"noRestrictedImports": {
-					"level": "error",
-					"options": {
-						"paths": {
-							"@radix-ui/react-dropdown-menu": "Use DropdownMenu from '~/components/ui/dropdown-menu'"
-						}
-					}
-				}
+				"useConsistentCurlyBraces": "error"
 			},
 			"style": {
 				"noDefaultExport": "off",

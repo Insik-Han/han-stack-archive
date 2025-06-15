@@ -17,21 +17,24 @@ export default defineConfig({
 			all: true,
 			include: ['src/**/*.{ts,tsx}'],
 			exclude: [
-				'src/**/*.unit.spec.{ts,tsx}',
+				'src/**/*.spec.{ts,tsx}',
 				'src/generated/**/*',
 				'src/routeTree.gen.ts',
+				'src/components/ui/**/*',
 			],
 			reporter: ['text', 'json-summary', 'json'],
 			reportOnFailure: true,
 		},
 		projects: [
 			{
+				extends: true,
 				test: {
 					name: 'unit',
 					include: ['src/**/*.unit.spec.{ts,tsx}'],
 				},
 			},
 			{
+				extends: true,
 				test: {
 					name: 'ui',
 					include: ['src/**/*.ui.spec.{ts,tsx}'],

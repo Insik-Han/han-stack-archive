@@ -1,5 +1,4 @@
-import type React from 'react'
-import { cn } from '~/lib/utils'
+import type { ReactNode } from 'react'
 import {
 	AlertDialog,
 	AlertDialogCancel,
@@ -14,16 +13,16 @@ import { Button } from './ui/button'
 interface Props {
 	open: boolean
 	onOpenChange: (open: boolean) => void
-	title: React.ReactNode
+	title: ReactNode
 	disabled?: boolean
-	desc: React.JSX.Element | string
+	desc: ReactNode
 	cancelBtnText?: string
-	confirmText?: React.ReactNode
+	confirmText?: ReactNode
 	destructive?: boolean
 	handleConfirm: () => void
 	isLoading?: boolean
 	className?: string
-	children?: React.ReactNode
+	children?: ReactNode
 }
 
 export function ConfirmDialog(props: Props) {
@@ -42,7 +41,7 @@ export function ConfirmDialog(props: Props) {
 	} = props
 	return (
 		<AlertDialog {...actions}>
-			<AlertDialogContent className={cn(className && className)}>
+			<AlertDialogContent className={className}>
 				<AlertDialogHeader className="text-left">
 					<AlertDialogTitle>{title}</AlertDialogTitle>
 					<AlertDialogDescription asChild={true}>
