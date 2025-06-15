@@ -13,6 +13,17 @@ export default defineConfig({
 		tailwindcss(),
 	],
 	test: {
+		coverage: {
+			all: true,
+			include: ['src/**/*.{ts,tsx}'],
+			exclude: [
+				'src/**/*.unit.spec.{ts,tsx}',
+				'src/generated/**/*',
+				'src/routeTree.gen.ts',
+			],
+			reporter: ['text', 'json-summary', 'json'],
+			reportOnFailure: true,
+		},
 		projects: [
 			{
 				test: {

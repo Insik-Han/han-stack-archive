@@ -22,6 +22,9 @@ src/generated/
 data.db
 data.db-journal
 
+# Vitest
+/coverage
+
 # Playwright
 /test-results/
 /playwright-report/
