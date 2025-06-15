@@ -1,0 +1,12 @@
+name: 'Setup Database'
+description: 'Setup database for testing'
+runs:
+  using: 'composite'
+  steps:
+    - name: 🏄 Copy test env vars
+      shell: bash
+      run: cp .env.example .env
+    
+    - name: 🛠 Setup Database
+      shell: bash
+      run: pnpm run migrate && pnpm run generate
