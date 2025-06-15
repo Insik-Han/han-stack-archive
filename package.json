@@ -62,6 +62,8 @@
 		"@playwright/test": "^1.53.0",
 		"@tanstack/react-query-devtools": "^5.80.7",
 		"@tanstack/react-router-devtools": "^1.121.12",
+		"@testing-library/react": "^16.3.0",
+		"@testing-library/react-hooks": "^8.0.1",
 		"@types/node": "^24.0.1",
 		"@types/react": "^19.1.8",
 		"@types/react-dom": "^19.1.6",
@@ -76,6 +78,7 @@
 		"vite-tsconfig-paths": "^5.1.4",
 		"vitest": "^3.2.3",
 		"vitest-browser-react": "^0.3.0",
+		"vitest-mock-extended": "^3.1.0",
 		"zod-prisma-types": "^3.2.4"
 	},
 	"prisma": {

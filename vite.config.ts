@@ -28,13 +28,16 @@ export default defineConfig({
 			{
 				test: {
 					name: 'unit',
-					include: ['src/**/*.unit.spec.{ts,tsx}'],
+					include: [
+						'src/**/*.unit.spec.{ts,tsx}',
+						'tests/**/*.unit.spec.{ts,tsx}',
+					],
 				},
 			},
 			{
 				test: {
 					name: 'ui',
-					include: ['src/**/*.ui.spec.{ts,tsx}'],
+					include: ['src/**/*.ui.spec.{ts,tsx}', 'tests/**/*.ui.spec.{ts,tsx}'],
 					browser: {
 						enabled: true,
 						provider: 'playwright',
