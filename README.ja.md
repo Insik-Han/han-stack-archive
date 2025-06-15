@@ -56,34 +56,34 @@
 
 1. リポジトリをクローン
 
-   ```bash
-   git clone https://github.com/Insik-Han/han-stack.git
-   cd han-stack
-   ```
+```bash
+git clone https://github.com/Insik-Han/han-stack.git
+cd han-stack
+```
 
 2. .envを作成
 
-   ```bash
-   cp .env.example .env
-   ```
+```bash
+cp .env.example .env
+```
 
 3. 依存関係をインストール
 
-   ```bash
-   pnpm install
-   ```
+```bash
+pnpm install
+```
 
-4. Prismaクライアントを生成
+4. 開発環境をセットアップ
 
-   ```bash
-   pnpm run generate
-   ```
+```bash
+pnpm run setup
+```
 
 5. 開発サーバーを起動
 
-   ```bash
-   pnpm run dev
-   ```
+```bash
+pnpm run dev
+```
 
 ## 開発
 

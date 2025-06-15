@@ -6,6 +6,7 @@
 	"scripts": {
 		"dev": "vite dev --port 3000",
 		"build": "vite build",
+		"setup": "pnpm generate && pnpm migrate && playwright install",
 		"start": "node .output/server/index.mjs",
 		"generate": "prisma generate zod",
 		"prisma:studio": "prisma studio",
@@ -19,7 +20,6 @@
 		"test:ui": "vitest run --project ui",
 		"test:e2e": "playwright test",
 		"test:e2e:ui": "playwright test --ui",
-		"test:e2e:install": "playwright install --with-deps chromium",
 		"biome": "biome check --write --unsafe",
 		"tsc": "tsc -b --incremental"
 	},

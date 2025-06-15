@@ -56,34 +56,34 @@ A powerful, full-stack SaaS starter template built with modern technologies. Thi
 
 1. Clone the repository
 
-   ```bash
-   git clone https://github.com/Insik-Han/han-stack.git
-   cd han-stack
-   ```
+```bash
+git clone https://github.com/Insik-Han/han-stack.git
+cd han-stack
+```
 
 2. Create .env
 
-   ```bash
-   cp .env.example .env
-   ```
+```bash
+cp .env.example .env
+```
 
 3. Install dependencies
 
-   ```bash
-   pnpm install
-   ```
+```bash
+pnpm install
+```
 
-4. Generate Prisma client
+4. Setup development environment
 
-   ```bash
-   pnpm run generate
-   ```
+```bash
+pnpm run setup
+```
 
 5. Start the development server
 
-   ```bash
-   pnpm run dev
-   ```
+```bash
+pnpm run dev
+```
 
 ## Development
 

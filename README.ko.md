@@ -63,27 +63,27 @@
 
 2. .env 생성
 
-   ```bash
-   cp .env.example .env
-   ```
+```bash
+cp .env.example .env
+```
 
 3. 의존성 설치
 
-   ```bash
-   pnpm install
-   ```
+```bash
+pnpm install
+```
 
-4. Prisma 클라이언트 생성
+4. 개발 환경 설정
 
-   ```bash
-   pnpm run generate
-   ```
+```bash
+pnpm run setup
+```
 
 5. 개발 서버 시작
 
-   ```bash
-   pnpm run dev
-   ```
+```bash
+pnpm run dev
+```
 
 ## 개발
 
