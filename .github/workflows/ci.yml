@@ -74,6 +74,9 @@ jobs:
       - name: 📥 Install Playwright Browsers
         run: pnpm exec playwright install --with-deps chromium
 
+      - name: Setup Database
+        uses: ./.github/actions/setup-database
+
       - name: 🏗 Build
         run: pnpm run build
 
