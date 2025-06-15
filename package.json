@@ -20,7 +20,7 @@
 		"test:ui": "vitest run --project ui",
 		"test:e2e": "playwright test",
 		"test:e2e:ui": "playwright test --ui",
-		"biome": "biome check --write --unsafe",
+		"biome": "biome check --write --unsafe .",
 		"tsc": "tsc -b --incremental"
 	},
 	"dependencies": {

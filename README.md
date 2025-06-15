@@ -281,7 +281,7 @@ UI tests are for testing React components with DOM interactions:
 
 ```typescript
 // src/hooks/use-mobile.ui.spec.ts
-import { renderHook } from "@testing-library/react";
+import { renderHook } from "vitest-browser-react";
 import { expect, test } from "vitest";
 import { useMobile } from "./use-mobile";
 
