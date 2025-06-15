@@ -1,3 +1,4 @@
+import { useSuspenseQuery } from '@tanstack/react-query'
 import { createFileRoute } from '@tanstack/react-router'
 import { Header } from '~/components/layout/Header'
 import { Main } from '~/components/layout/Main'
@@ -6,13 +7,22 @@ import { TasksTable } from '~/features/tasks/components/tasks-table'
 import { TasksPrimaryButtons } from '~/features/tasks/components/tasks-table/TasksPrimaryButtons'
 import { tasksColumns } from '~/features/tasks/components/tasks-table/columns'
 import TasksProvider from '~/features/tasks/contexts/tasks-content'
-import { tasks } from '~/features/tasks/data/tasks'
+import { orpc } from '~/lib/orpc'
 
 export const Route = createFileRoute('/_admin-console/tasks/')({
 	component: RouteComponent,
+	loader: async ({ context: { queryClient } }) => {
+		await queryClient.ensureQueryData(
+			orpc.tasks.list.queryOptions({ input: {} }),
+		)
+	},
 })
 
 function RouteComponent() {
+	const { data: tasks } = useSuspenseQuery(
+		orpc.tasks.list.queryOptions({ input: {} }),
+	)
+
 	return (
 		<>
 			<Header fixed={true} />
