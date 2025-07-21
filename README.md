@@ -3,6 +3,11 @@
 [![ja](https://img.shields.io/badge/lang-ja-red.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ja.md)
 [![ko](https://img.shields.io/badge/lang-ko-blue.svg)](https://github.com/Insik-Han/han-stack/blob/dev/README.ko.md)
 
+> [!WARNING]
+> **This repository is no longer actively maintained.**
+>
+> I highly recommend checking out [create-better-t-stack](https://github.com/AmanVarshney01/create-better-t-stack) as a more robust and actively developed alternative for similar functionalities.
+
 A powerful, full-stack SaaS starter template built with modern technologies. This template provides a solid foundation for building scalable SaaS applications with best practices and industry-standard tools.
 
 ## Features
